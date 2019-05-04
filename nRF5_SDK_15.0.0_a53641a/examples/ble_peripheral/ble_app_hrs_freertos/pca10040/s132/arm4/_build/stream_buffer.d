@@ -1,0 +1,9 @@
+.\_build\stream_buffer.o: ..\..\..\..\..\..\external\freertos\source\stream_buffer.c
+.\_build\stream_buffer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\_build\stream_buffer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\string.h
+.\_build\stream_buffer.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
+.\_build\stream_buffer.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\_build\stream_buffer.o: ..\..\..\config\FreeRTOSConfig.h
+.\_build\stream_buffer.o: ..\..\..\..\..\..\components\softdevice\s132\headers\nrf_soc.h
+.\_build\stream_buffer.o: ..\..\..\..\..\..\modules\nrfx\mdk\nrf.h
+.\_build\stream_buffer.o: ..\..\..\..\..\..\modules\nrfx\mdk\nrf52.h

@@ -1,0 +1,9 @@
+.\_build\event_groups.o: ..\..\..\..\..\..\external\freertos\source\event_groups.c
+.\_build\event_groups.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\_build\event_groups.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
+.\_build\event_groups.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+.\_build\event_groups.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\_build\event_groups.o: ..\..\..\config\FreeRTOSConfig.h
+.\_build\event_groups.o: ..\..\..\..\..\..\components\softdevice\s132\headers\nrf_soc.h
+.\_build\event_groups.o: ..\..\..\..\..\..\modules\nrfx\mdk\nrf.h
+.\_build\event_groups.o: ..\..\..\..\..\..\modules\nrfx\mdk\nrf52.h
