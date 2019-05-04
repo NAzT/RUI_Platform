@@ -87,7 +87,7 @@ void test_task(void * pvParameter)
         memset(gps_rsp,0,128);
         itracker_function.gps_get(gps_rsp,128);
         vTaskDelay(2000);
-        NRF_LOG_INFO("gps info :%lf,%lf;",gps_lat,gps_lon);
+        NRF_LOG_INFO("iiigps info :%lf,%lf;",gps_lat,gps_lon);
 
 #endif
 
@@ -98,21 +98,6 @@ void test_task(void * pvParameter)
            NRF_LOG_INFO("humidity = %d\r\n",humidity);
 #endif
 
-#ifdef LORA_TEST
-        if(JOIN_FLAG==1)
-        {
-            memset(lora_data,0,128);
-            lora_len_acc = 0;
-            lora_len_t_h = 0;
-            lora_len_gps = 0;
-            lora_len_acc = sprintf(lora_data,"A:%d,%d,%d;",x,y,z);
-            lora_len_t_h = sprintf(lora_data+lora_len_acc,"T:%d;H:%d;",(int)temp,(int)humidity);
-            lora_len_gps = sprintf(lora_data+lora_len_acc+lora_len_t_h,"G:%lf,%lf;",gps_lat,gps_lon);            
-            itracker_function.communicate_send(lora_data);
-            lora_send_ok = 1; 
-        }
-        
-#endif
 #if defined(SLEEP_MODE) && !defined(LORA_TEST)
         power_save_open();
 #endif
@@ -286,7 +271,7 @@ void nb_iot_task(void * pvParameter)
                 itracker_function.gps_get(gps_data,128);
                 vTaskDelay(500);
 				NRF_LOG_INFO("GPS = %s\r\n",gps_data);
-                NRF_LOG_INFO("gps info :%lf,%lf;",gps_lat,gps_lon);
+                NRF_LOG_INFO("Xgps info :%lf,%lf;",gps_lat,gps_lon);
                 memset(test_data,0,256);
                 sensor_len = sprintf(test_data,"Acc:%d,%d,%d;Tem:%d;Hum:%d;Pre:%d;Mag:%d,%d,%d;Lig:%d;Gps:%lf,%lf;",x,y,z,(int)temp,(int)humidity,(int)pressure,(int)magnetic_x,(int)magnetic_y,(int)magnetic_z,(int)light,gps_lat,gps_lon);
                 memset(cmd,0,128);

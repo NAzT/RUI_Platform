@@ -1,42 +1,3 @@
-/**
- * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
- *
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted provided that the following conditions are met:
- *
- * 1. Redistributions of source code must retain the above copyright notice, this
- *    list of conditions and the following disclaimer.
- *
- * 2. Redistributions in binary form, except as embedded into a Nordic
- *    Semiconductor ASA integrated circuit in a product or a software update for
- *    such product, must reproduce the above copyright notice, this list of
- *    conditions and the following disclaimer in the documentation and/or other
- *    materials provided with the distribution.
- *
- * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
- *    contributors may be used to endorse or promote products derived from this
- *    software without specific prior written permission.
- *
- * 4. This software, with or without modification, must only be used with a
- *    Nordic Semiconductor ASA integrated circuit.
- *
- * 5. Any software provided in binary form under this license must not be reverse
- *    engineered, decompiled, modified and/or disassembled.
- *
- * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
- * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
- * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
- * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
- * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
- * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- *
- */
 /** @file
  *
  * @defgroup ble_sdk_uart_over_ble_main main.c
@@ -151,30 +112,6 @@ xSemaphoreHandle xBinarySemaphore_iot = NULL;
 uint8_t cmd[128] = {0};
 #endif
 
-#ifdef LORA_TEST
-uint8_t JOIN_FLAG = 0;  // 0-not connect; 1- connect
-extern int lora_send_ok;
-
-xSemaphoreHandle xBinarySemaphore = NULL;
-extern void SX1276OnDio0Irq(void); 
-extern lora_cfg_t g_lora_cfg_t;
-extern int  parse_lora_config(char* str, lora_cfg_t *cfg);
-extern void write_lora_config(void);
-void lora_task(void * pvParameter)
-{
-    while(1)
-    {
-         if( xSemaphoreTake( xBinarySemaphore, portMAX_DELAY ) == pdTRUE )
-         {
-             SX1276OnDio0Irq();
-         }
-         //after getting Semaphore, must call vTaskDelay to excute pendsv
-         vTaskDelay(2000);
-    }
-
-}
-
-#endif
 
 #ifdef MAX7_TEST
 
@@ -893,8 +830,11 @@ int main(void)
     nrf_drv_clock_init();
 
     // Activate deep sleep mode.
-    SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
-    NRF_POWER->DCDCEN = 1;
+    // Nat
+
+    // SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+    // NRF_POWER->DCDCEN = 1;
+
     ble_stack_init();
     timers_init();
     gap_params_init();
