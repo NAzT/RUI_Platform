@@ -10,11 +10,6 @@
 #include "itracker.h"
 #include "nrf_log.h"
 
-#ifdef LORA_TEST
-extern uint8_t JOIN_FLAG;
-extern lora_cfg_t g_lora_cfg_t;
-int lora_send_ok = 0;
-#endif
 
 #if defined(BC95G_TEST) || defined(M35_TEST) || defined(BG96_TEST)
 extern uint8_t cmd[128];
@@ -44,30 +39,11 @@ void test_task(void * pvParameter)
     float light = 0;
     double lat = 0;
     double lon = 0;
-#ifdef LORA_TEST
-    if(g_lora_cfg_t.sof == LORA_CONFIG_MAGIC)
-    {
-       region_init();
-    }
-
-#endif
     while(1)
     {
         NRF_LOG_INFO("++++++++++++++++test begin++++++++++++++++\r\n");
         power_save_close();
-#ifdef BEM280_TEST
-        itracker_function.temperature_get(&temp);
-        NRF_LOG_INFO("temperature = %d\r\n",temp);
-        itracker_function.humidity_get(&humidity);
-        NRF_LOG_INFO("humidity = %d\r\n",humidity);
-        itracker_function.pressure_get(&pressure);
-        NRF_LOG_INFO("pressure = %d\r\n",pressure);
-#endif
 
-#ifdef LPS22HB_TEST
-	itracker_function.pressure_get(&pressure);
-        NRF_LOG_INFO("pressure = %d hPa\r\n",pressure);	
-#endif
 #ifdef LIS3DH_TEST
         itracker_function.acceleration_get(&x,&y,&z);
         NRF_LOG_INFO("acceleration x,y,z = %d mg,%d mg,%d mg",x,y,z);
@@ -77,10 +53,6 @@ void test_task(void * pvParameter)
         itracker_function.magnetic_get(&magnetic_x,&magnetic_y,&magnetic_z);
         NRF_LOG_INFO("magnetic x,y,z = %d,%d,%d\r\n",magnetic_x,magnetic_y,magnetic_z);
 #endif
-#ifdef OPT3001_TEST
-        itracker_function.light_strength_get(&light);
-        NRF_LOG_INFO("light strength = %d\r\n",light);
-#endif
 
 #if defined(L70R_TEST) ||  defined(BG96_TEST) || defined(MAX7_TEST)
 
@@ -89,14 +61,7 @@ void test_task(void * pvParameter)
         vTaskDelay(2000);
         NRF_LOG_INFO("iiigps info :%lf,%lf;",gps_lat,gps_lon);
 
-#endif
-
-#if defined(SHT31_TEST) || defined(SHTC3_TEST)
-           itracker_function.temperature_get(&temp);
-           NRF_LOG_INFO("temperature = %d\r\n",temp);
-           itracker_function.humidity_get(&humidity);
-           NRF_LOG_INFO("humidity = %d\r\n",humidity);
-#endif
+#endif 
 
 #if defined(SLEEP_MODE) && !defined(LORA_TEST)
         power_save_open();
@@ -180,8 +145,10 @@ void nb_iot_task(void * pvParameter)
     uint8_t i =0;
     uint8_t j =0;
 
+        NRF_LOG_INFO("nb task");
     while(1)
     {
+        NRF_LOG_INFO("waiting for a semaphore.");
         if( xSemaphoreTake( xBinarySemaphore_iot, portMAX_DELAY ) == pdTRUE && cmd[0] != 0)
         {
             if(strstr(cmd,"SEND")!= NULL)

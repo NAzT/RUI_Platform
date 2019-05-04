@@ -9,22 +9,6 @@
 #include "nrf_rtc.h"
 
 GSM_RECEIVE_TYPE g_type = GSM_TYPE_CHAR;
-#ifdef LORA_TEST
-
-const nrf_drv_rtc_t rtc = NRF_DRV_RTC_INSTANCE(2); /**< Declaring an instance of nrf_drv_rtc for RTC0. */
-
-uint8_t BoardGetBatteryLevel( void )
-{
-    return 250; // full charged
-}
-
-uint32_t get_stamp(void)
-{
-    uint32_t ticks = xTaskGetTickCount();
-    return ticks /portTICK_RATE_MS;
-}
-
-#endif
 
 void delay_ms(uint32_t ms)
 {

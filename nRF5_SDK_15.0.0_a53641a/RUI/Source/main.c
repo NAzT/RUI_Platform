@@ -125,10 +125,11 @@ void gps_task(void * pvParameter)
     static uint8_t count = 10;
     while(1)
     { 
+
     	  if(count > 1)
           {
 	          Max7GpsReadDataStream();
-	          //NRF_LOG_INFO("GpsDataBuffer =\r\n%s\r\n",GpsDataBuffer);
+	          NRF_LOG_INFO("GpsDataBuffer =\r\n%s\r\n",GpsDataBuffer);
 	          if (GpsParseGpsData(GpsDataBuffer, 512))
 	          {
 	                GpsGetLatestGpsPositionDouble(&gps_lat, &gps_lon);
@@ -855,20 +856,9 @@ int main(void)
     xReturned = xTaskCreate(dfu_task, "dfu", 512, NULL, 1, NULL);
 #endif
 
-#ifdef LORA_TEST
-
-    vSemaphoreCreateBinary(xBinarySemaphore);
-    if(xBinarySemaphore == NULL)
-    {
-        NRF_LOG_INFO("xBinarySemaphore is NULL\r\n");
-    }
-   //creat lorawan IRQ sync task for TX and RX interrupt
-    xReturned = xTaskCreate(lora_task, "lora", 256, NULL, 1, NULL);
-   //test task
-
-#endif
 
 #ifdef ACCESS_NET_TEST
+    NRF_LOG_INFO("nat ACCESS_NET_TEST")
     vSemaphoreCreateBinary(xBinarySemaphore_iot);
     if(xBinarySemaphore_iot == NULL)
     {
