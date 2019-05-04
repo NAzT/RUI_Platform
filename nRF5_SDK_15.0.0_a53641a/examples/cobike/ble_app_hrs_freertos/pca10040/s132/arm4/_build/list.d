@@ -1,9 +1,0 @@
-.\_build\list.o: ..\..\..\..\..\..\external\freertos\source\list.c
-.\_build\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\_build\list.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
-.\_build\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-.\_build\list.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\_build\list.o: ..\..\..\config\FreeRTOSConfig.h
-.\_build\list.o: ..\..\..\..\..\..\components\softdevice\s132\headers\nrf_soc.h
-.\_build\list.o: ..\..\..\..\..\..\modules\nrfx\mdk\nrf.h
-.\_build\list.o: ..\..\..\..\..\..\modules\nrfx\mdk\nrf52.h

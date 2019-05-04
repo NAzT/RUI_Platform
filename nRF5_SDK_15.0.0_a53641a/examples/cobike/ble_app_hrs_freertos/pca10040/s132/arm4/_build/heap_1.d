@@ -1,9 +1,0 @@
-.\_build\heap_1.o: ..\..\..\..\..\..\external\freertos\source\portable\MemMang\heap_1.c
-.\_build\heap_1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
-.\_build\heap_1.o: ..\..\..\..\..\..\external\freertos\source\include\FreeRTOS.h
-.\_build\heap_1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
-.\_build\heap_1.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
-.\_build\heap_1.o: ..\..\..\config\FreeRTOSConfig.h
-.\_build\heap_1.o: ..\..\..\..\..\..\components\softdevice\s132\headers\nrf_soc.h
-.\_build\heap_1.o: ..\..\..\..\..\..\modules\nrfx\mdk\nrf.h
-.\_build\heap_1.o: ..\..\..\..\..\..\modules\nrfx\mdk\nrf52.h

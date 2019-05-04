@@ -53,11 +53,29 @@
 #include "nrf_delay.h"
 #include "boards.h"
 
+
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
+
+/**
+ *@brief Function for initializing logging.
+ */
+static void log_init(void)
+{
+    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
+
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+}
+
+
 /**
  * @brief Function for application main entry.
  */
 int main(void)
 {
+    log_init();
     /* Configure board. */
     bsp_board_init(BSP_INIT_LEDS);
 
@@ -68,6 +86,7 @@ int main(void)
         {
             bsp_board_led_invert(i);
             nrf_delay_ms(500);
+            NRF_LOG_INFO("HELLO");
         }
     }
 }
