@@ -803,17 +803,10 @@ int main(void)
     advertising_init();
     conn_params_init();
     peer_manager_init();
-#ifdef DFU_TEST
-    dfu_settings_init();
-#endif
     sensors_init();
     itracker_function_init();
     // Create a FreeRTOS task for the BLE stack. The task will run advertising_start() before entering its loop.
     nrf_sdh_freertos_init(advertising_start, NULL);
-#ifdef DFU_TEST
-    // dfu task is the only background task
-    xReturned = xTaskCreate(dfu_task, "dfu", 512, NULL, 1, NULL);
-#endif
 
 
 #ifdef ACCESS_NET_TEST

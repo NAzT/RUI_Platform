@@ -119,20 +119,9 @@ void Gsm_wait_response(uint8_t *rsp, uint32_t len, uint32_t timeout,GSM_RECEIVE_
 void itracker_function_init()
 {
     memset(&itracker_function,0,sizeof(itracker_function));
-#ifdef LIS3DH_TEST
-    itracker_function.acceleration_get = get_lis3dh_data_bus;
-#endif
-
-#if defined(L70R_TEST) ||  defined(BG96_TEST) ||  defined(MAX7_TEST)
+    // itracker_function.acceleration_get = get_lis3dh_data_bus; 
     itracker_function.gps_get = gps_data_get_bus;
-#endif
 
-#if defined(BC95G_TEST) || defined(M35_TEST) || defined(BG96_TEST)
-    itracker_function.communicate_send = Gsm_print;
-    itracker_function.communicate_response = Gsm_wait_response;
-#endif
-
-#ifdef LORA_TEST
-    itracker_function.communicate_send = lora_send;
-#endif
+    // itracker_function.communicate_send = Gsm_print;
+    // itracker_function.communicate_response = Gsm_wait_response;
 }
