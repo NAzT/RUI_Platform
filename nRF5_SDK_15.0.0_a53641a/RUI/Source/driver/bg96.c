@@ -128,7 +128,8 @@ int Gsm_WaitRspOK(char *rsp_value, uint16_t timeout_ms, uint8_t is_rf)
             }
 
             rsp_value[i++] = (char)c;
-            //NRF_LOG_INFO("%02X", rsp_value[i - 1]);
+            NRF_LOG_INFO("[x] %02X", rsp_value[i - 1]);
+            NRF_LOG_INFO(rsp_value);
             time_count--;
         }
         while(time_count > 0);
@@ -151,6 +152,7 @@ int Gsm_WaitRspOK(char *rsp_value, uint16_t timeout_ms, uint8_t is_rf)
 
             if(i >= 0 && rsp_value != NULL)
             {
+                NRF_LOG_INFO("%s\r\n", GSM_RSP);
                 if(is_rf)
                     cmp_p = strstr(GSM_RSP, GSM_CMD_RSP_OK_RF);
                 else
@@ -159,7 +161,7 @@ int Gsm_WaitRspOK(char *rsp_value, uint16_t timeout_ms, uint8_t is_rf)
                 {
                     if(i > wait_len && rsp_value != NULL)
                     {
-                        //SEGGER_RTT_printf(0,"--%s  len=%d\r\n", rsp_value, i);
+                        SEGGER_RTT_printf(0,"[nat] --%s  len=%d\r\n", rsp_value, i);
                         memcpy(rsp_value, GSM_RSP, i);
                     }
                     ret = 0;

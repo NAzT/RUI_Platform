@@ -147,30 +147,4 @@
 #define             LIS2MDL_INT_PIN                        16
 
 
-/*
-		bme280 PIN Assignment
-		BME_CS		--	P0.02
-		BME_SDI		--	P0.03
-		BME_SCK		--	P0.04
-		BME_SDO		--	P0.05
-		
-*/
-#define             BME280_SPI_CS_PIN                        2
-#define             BME280_SPI_SDI_PIN                        3
-#define             BME280_SPI_SCK_PIN                        4
-#define             BME280_SPI_SDO_PIN                        5
-
-
-/*
-		OPT3001 PIN Assignment
-		OPT_SDA		--	P0.21
-		OPT_INT		--	P0.22
-		OPT_SCL		--	P0.23
-		
-*/
-#define             OPT3001_TWI_SDA_PIN                        26//21
-#define             OPT3001_INT_PIN                        		 22
-#define             OPT3001_TWI_SCL_PIN                        23
-
-
 #endif  // __PIN_DEFINE_ITRACKER_H__

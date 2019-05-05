@@ -112,42 +112,6 @@ xSemaphoreHandle xBinarySemaphore_iot = NULL;
 uint8_t cmd[128] = {0};
 #endif
 
-
-#ifdef MAX7_TEST
-
-extern double gps_lat;
-extern double gps_lon;   
-extern uint8_t GpsDataBuffer[512];
-TaskHandle_t xTaskGps;
-
-void gps_task(void * pvParameter)
-{
-    static uint8_t count = 10;
-    while(1)
-    { 
-
-    	  if(count > 1)
-          {
-	          Max7GpsReadDataStream();
-	          NRF_LOG_INFO("GpsDataBuffer =\r\n%s\r\n",GpsDataBuffer);
-	          if (GpsParseGpsData(GpsDataBuffer, 512))
-	          {
-	                GpsGetLatestGpsPositionDouble(&gps_lat, &gps_lon);
-	          }
-	          count--;
-	          vTaskDelay(100); 
-          }
-          else
-          {
-          	count = 10;
-		vTaskSuspend(NULL);
-          }
-          
-    }
-}
-
-#endif
-
 #ifdef DFU_TEST
 //dfu task
 extern void dfu_settings_init(void);
@@ -282,15 +246,10 @@ static void nus_data_handler(ble_nus_evt_t * p_evt)
 
         NRF_LOG_DEBUG("Received data from BLE NUS.");
         NRF_LOG_HEXDUMP_DEBUG(p_evt->params.rx_data.p_data, p_evt->params.rx_data.length);
-#ifdef LORA_TEST
-        if(strncmp((char*)p_evt->params.rx_data.p_data, "lora_cfg:", strlen("lora_cfg:")) == 0)
-        {
-            parse_lora_config((char*)p_evt->params.rx_data.p_data+strlen("lora_cfg:"), &g_lora_cfg_t);
-            write_lora_config();
-        }
-#endif
 
 #ifdef ACCESS_NET_TEST
+NRF_LOG_INFO("NATTTTTTTTTT");
+
         memset(cmd,0,128);
         memcpy(cmd,&(p_evt->params.rx_data.p_data[0]),p_evt->params.rx_data.length);
         NRF_LOG_DEBUG("cmd = %s\r\n",cmd);
@@ -864,14 +823,13 @@ int main(void)
     {
         NRF_LOG_INFO("xBinarySemaphore_iot is NULL\r\n");
     }
+    else {
+        NRF_LOG_INFO("xBinarySemaphore_iot created.\r\n"); 
+    }
 	xReturned = xTaskCreate(nb_iot_task, "nb_iot", 512*2, NULL, 2, NULL);
 
 #else
     xReturned = xTaskCreate(test_task, "test", 512, NULL, 2, NULL);
-#endif
-
-#ifdef MAX7_TEST
-    xReturned = xTaskCreate(gps_task, "gps", 128, NULL, 1, &xTaskGps);
 #endif
 
 

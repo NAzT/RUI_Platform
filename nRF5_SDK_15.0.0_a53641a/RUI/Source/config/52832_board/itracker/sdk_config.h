@@ -7517,7 +7517,7 @@
 // <4=> Debug 
 
 #ifndef NRF_MPU_CONFIG_LOG_LEVEL
-#define NRF_MPU_CONFIG_LOG_LEVEL 3
+#define NRF_MPU_CONFIG_LOG_LEVEL 4
 #endif
 
 // <o> NRF_MPU_CONFIG_INFO_COLOR  - ANSI escape code prefix.
