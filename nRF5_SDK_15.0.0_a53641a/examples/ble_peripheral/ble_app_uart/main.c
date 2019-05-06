@@ -573,16 +573,16 @@ static void uart_init(void)
     uint32_t                     err_code;
     app_uart_comm_params_t const comm_params =
     {
-        .rx_pin_no    = RX_PIN_NUMBER,
-        .tx_pin_no    = TX_PIN_NUMBER,
+        .rx_pin_no    = 8,
+        .tx_pin_no    = 9,
         .rts_pin_no   = RTS_PIN_NUMBER,
         .cts_pin_no   = CTS_PIN_NUMBER,
         .flow_control = APP_UART_FLOW_CONTROL_DISABLED,
         .use_parity   = false,
 #if defined (UART_PRESENT)
-        .baud_rate    = NRF_UART_BAUDRATE_115200
+        .baud_rate    = NRF_UART_BAUDRATE_9600
 #else
-        .baud_rate    = NRF_UARTE_BAUDRATE_115200
+        .baud_rate    = NRF_UARTE_BAUDRATE_9600
 #endif
     };
 
@@ -693,6 +693,7 @@ int main(void)
     // Initialize.
     uart_init();
     log_init();
+    NRF_LOG_INFO("Debug logging for UART over RTT started.");
     timers_init();
     buttons_leds_init(&erase_bonds);
     power_management_init();
@@ -708,9 +709,12 @@ int main(void)
     NRF_LOG_INFO("Debug logging for UART over RTT started.");
     advertising_start();
 
+    uint8_t rx_data;
     // Enter main loop.
     for (;;)
     {
+        app_uart_get(&rx_data);
+        NRF_LOG_INFO("%c", rx_data)
         idle_state_handle();
     }
 }

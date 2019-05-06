@@ -37,7 +37,7 @@ Output/blinky_FreeRTOS_pca10040\ Release/Obj/boards.o: \
  ../../../../../../components/libraries/util/app_error.h \
  /Applications/SEGGER\ Embedded\ Studio\ for\ ARM\ 4.16/include/stdio.h \
  ../../../../../../components/libraries/util/sdk_errors.h \
- ../../../../../../components/softdevice/s132/headers/nrf_error.h \
+ ../../../../../../components/drivers_nrf/nrf_soc_nosd/nrf_error.h \
  ../../../../../../components/libraries/util/app_error_weak.h \
  ../../../../../../modules/nrfx/soc/nrfx_coredep.h \
  ../../../../../../components/libraries/util/sdk_errors.h \

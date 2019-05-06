@@ -55,6 +55,26 @@
 #include "nrf_delay.h"
 #include "nrf.h"
 #include "bsp.h"
+
+
+#include <stdint.h>
+#include <stdbool.h>
+#include <string.h>
+#include "app_error.h"
+#include "app_fifo.h"
+#include "app_uart.h"
+#include "boards.h"
+#include "sdk_config.h"
+
+#include "nrf_log_default_backends.h"
+#include "nrf_log_ctrl.h"
+#include "nrf_log.h"
+#include "nrf_delay.h"
+
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
+#include "nrf_log_default_backends.h"
+
 #if defined (UART_PRESENT)
 #include "nrf_uart.h"
 #endif
@@ -136,6 +156,9 @@ static void uart_loopback_test()
 int main(void)
 {
     uint32_t err_code;
+    APP_ERROR_CHECK(NRF_LOG_INIT(NULL));
+    NRF_LOG_DEFAULT_BACKENDS_INIT();
+    NRF_LOG_INFO("Temperature example started.");
 
     bsp_board_init(BSP_INIT_LEDS);
 

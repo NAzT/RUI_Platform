@@ -13,6 +13,7 @@
 
 #if defined(BC95G_TEST) || defined(M35_TEST) || defined(BG96_TEST)
 extern uint8_t cmd[128];
+
 extern xSemaphoreHandle xBinarySemaphore_iot;
 #endif
 
@@ -44,24 +45,15 @@ void test_task(void * pvParameter)
         NRF_LOG_INFO("++++++++++++++++test begin++++++++++++++++\r\n");
         power_save_close();
 
-#ifdef LIS3DH_TEST
-        itracker_function.acceleration_get(&x,&y,&z);
-        NRF_LOG_INFO("acceleration x,y,z = %d mg,%d mg,%d mg",x,y,z);
+        // itracker_function.acceleration_get(&x,&y,&z);
+        // NRF_LOG_INFO("acceleration x,y,z = %d mg,%d mg,%d mg",x,y,z); 
 
-#endif
-#ifdef LIS2MDL_TEST
-        itracker_function.magnetic_get(&magnetic_x,&magnetic_y,&magnetic_z);
-        NRF_LOG_INFO("magnetic x,y,z = %d,%d,%d\r\n",magnetic_x,magnetic_y,magnetic_z);
-#endif
-
-#if defined(L70R_TEST) ||  defined(BG96_TEST) || defined(MAX7_TEST)
-
+        NRF_LOG_INFO("Z");
         memset(gps_rsp,0,128);
         itracker_function.gps_get(gps_rsp,128);
         vTaskDelay(2000);
-        NRF_LOG_INFO("iiigps info :%lf,%lf;",gps_lat,gps_lon);
-
-#endif 
+        NRF_LOG_INFO("Y");
+        // NRF_LOG_INFO("iiigps info :%lf,%lf;",gps_lat,gps_lon); 
 
 #if defined(SLEEP_MODE) && !defined(LORA_TEST)
         power_save_open();

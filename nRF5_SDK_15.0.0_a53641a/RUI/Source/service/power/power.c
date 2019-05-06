@@ -9,15 +9,6 @@
 #include "nrf_soc.h"
 #include "sensor.h"
 
-#ifdef BG96_TEST
-#include "bg96.h"
-#endif
-#ifdef BC95G_TEST
-#include "bc95-g.h"
-#endif
-#ifdef M35_TEST
-#include "m35.h"
-#endif
 
 #ifdef L70R_TEST
 extern void Gps_standby(void);

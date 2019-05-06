@@ -96,14 +96,14 @@ int __getchar(FILE * p_file)
     }
     return input;
 }
-
-int __putchar(int ch, FILE * p_file)
-{
-    UNUSED_PARAMETER(p_file);
-
-    UNUSED_VARIABLE(app_uart_put((uint8_t)ch));
-    return ch;
-}
+//
+//int __putchar(int ch, FILE * p_file)
+//{
+//    UNUSED_PARAMETER(p_file);
+//
+//    UNUSED_VARIABLE(app_uart_put((uint8_t)ch));
+//    return ch;
+//}
 
 #elif defined(__GNUC__) && !defined(__SES_ARM)
 

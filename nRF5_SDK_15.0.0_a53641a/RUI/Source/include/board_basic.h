@@ -21,57 +21,7 @@
 #include "hal_spi.h"
 #include "hal_gpio.h"
 #include "hal_uart.h"
-#include "pin_define.h"
-
-#ifdef BEM280_TEST
-#include "bme280.h"
-#endif
-
-#ifdef OPT3001_TEST
-#include "opt3001.h"
-#endif
-
-#ifdef LIS2MDL_TEST
-#include "lis2mdl.h"
-#endif
-#ifdef LIS3DH_TEST
-#include "lis3dh.h"
-#endif
-#ifdef SHTC3_TEST
-#include "shtc3.h"
-#endif
-
-#ifdef SHT31_TEST
-#include "sht31.h"
-#endif
-#if defined(BG96_TEST)
-#include "bg96.h"
-#endif
-#if defined(M35_TEST)
-#include "m35.h"
-#endif
-#if defined(BC95G_TEST)
-#include "bc95-g.h"
-#endif
-#if defined(SHT31_TEST)
-#include "sht31.h"
-#endif
-#if defined(MAX7_TEST)
-#include "gps_max7.h"
-#endif
-#if defined(SHTC3_TEST)
-#include "shtc3.h"
-#endif
-
-#if defined(LS22HB_TEST)
-#include "lps22hb.h"
-#endif
-
-#ifdef LORA_TEST
-#include "radio.h"
-#include "sx1276.h"
-#include "sx1276_lora.h"
-#endif
+#include "pin_define.h" 
 
 
 typedef enum GSM_RECEIVE_TYPE
@@ -79,21 +29,6 @@ typedef enum GSM_RECEIVE_TYPE
 	GSM_TYPE_CHAR,
 	GSM_TYPE_FILE,
 }GSM_RECEIVE_TYPE;
-
-
-typedef struct {
-        uint8_t sof;
-        uint8_t dev_eui[8];
-        uint8_t app_eui[8];
-        uint8_t app_key[16];
-        uint32_t dev_addr;
-        uint8_t nwkskey[16];
-        uint8_t appskey[16];
-} lora_cfg_t;
-
-
-#define LORA_CONFIG_MAGIC  	0xAB
-
 
 /*!
  * Generic definition

@@ -68,7 +68,7 @@
 #error "Board is not equipped with enough amount of LEDs"
 #endif
 
-#define TASK_DELAY        200           /**< Task delay. Delays a LED0 task for 200 ms */
+#define TASK_DELAY        1000           /**< Task delay. Delays a LED0 task for 200 ms */
 #define TIMER_PERIOD      1000          /**< Timer period. LED1 timer will expire after 1000 ms */
 
 TaskHandle_t  led_toggle_task_handle;   /**< Reference to LED0 toggling FreeRTOS task. */
@@ -87,6 +87,7 @@ static void led_toggle_task_function (void * pvParameter)
 
         /* Delay a task for a given number of ticks */
         vTaskDelay(TASK_DELAY);
+        NRF_LOG_INFO("yHELLO");
 
         /* Tasks must be implemented to never return... */
     }
@@ -123,7 +124,7 @@ int main(void)
 
     log_init();
 
-    NRF_LOG_INFO("HELLO");
+    NRF_LOG_INFO("xHELLO");
 
     /* Configure LED-pins as outputs */
     bsp_board_init(BSP_INIT_LEDS);
@@ -139,12 +140,15 @@ int main(void)
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
 
     /* Start FreeRTOS scheduler. */
+    NRF_LOG_INFO("QHELLO");
     vTaskStartScheduler();
 
     while (true)
     {
         /* FreeRTOS should not be here... FreeRTOS goes back to the start of stack
          * in vTaskStartScheduler function. */
+         
+        
     }
 }
 

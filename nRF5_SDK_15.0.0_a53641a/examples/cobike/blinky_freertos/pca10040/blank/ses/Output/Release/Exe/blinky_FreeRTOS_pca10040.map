@@ -187,7 +187,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x8c Output/blinky_FreeRTOS_pca10040 Release/Obj/croutine.o
  .debug_macro   0x0000000000000000       0x43 Output/blinky_FreeRTOS_pca10040 Release/Obj/croutine.o
  .debug_line    0x0000000000000000      0x47f Output/blinky_FreeRTOS_pca10040 Release/Obj/croutine.o
- .debug_str     0x0000000000000000    0x65c26 Output/blinky_FreeRTOS_pca10040 Release/Obj/croutine.o
+ .debug_str     0x0000000000000000    0x65c22 Output/blinky_FreeRTOS_pca10040 Release/Obj/croutine.o
  .comment       0x0000000000000000       0x44 Output/blinky_FreeRTOS_pca10040 Release/Obj/croutine.o
  .ARM.attributes
                 0x0000000000000000       0x39 Output/blinky_FreeRTOS_pca10040 Release/Obj/croutine.o
@@ -295,7 +295,7 @@ Discarded input sections
  .debug_macro   0x0000000000000000       0x91 Output/blinky_FreeRTOS_pca10040 Release/Obj/event_groups.o
  .debug_macro   0x0000000000000000       0x19 Output/blinky_FreeRTOS_pca10040 Release/Obj/event_groups.o
  .debug_line    0x0000000000000000      0x999 Output/blinky_FreeRTOS_pca10040 Release/Obj/event_groups.o
- .debug_str     0x0000000000000000    0x66607 Output/blinky_FreeRTOS_pca10040 Release/Obj/event_groups.o
+ .debug_str     0x0000000000000000    0x66603 Output/blinky_FreeRTOS_pca10040 Release/Obj/event_groups.o
  .comment       0x0000000000000000       0x44 Output/blinky_FreeRTOS_pca10040 Release/Obj/event_groups.o
  .ARM.attributes
                 0x0000000000000000       0x39 Output/blinky_FreeRTOS_pca10040 Release/Obj/event_groups.o
@@ -5850,45 +5850,45 @@ OUTPUT(Output/Release/Exe/blinky_FreeRTOS_pca10040.elf elf32-littlearm)
  .debug_aranges
                 0x0000000000000858       0x38 Output/blinky_FreeRTOS_pca10040 Release/Obj/system_nrf52.o
 
-.debug_str      0x0000000000000000    0x752f6
+.debug_str      0x0000000000000000    0x7536e
  .debug_str     0x0000000000000000      0x114 Output/blinky_FreeRTOS_pca10040 Release/Obj/thumb_crt0.o
- .debug_str     0x0000000000000114    0x6610a Output/blinky_FreeRTOS_pca10040 Release/Obj/boards.o
-                                      0x66eea (size before relaxing)
- .debug_str     0x000000000006621e     0x3d90 Output/blinky_FreeRTOS_pca10040 Release/Obj/heap_1.o
+ .debug_str     0x0000000000000114    0x66182 Output/blinky_FreeRTOS_pca10040 Release/Obj/boards.o
+                                      0x66ee6 (size before relaxing)
+ .debug_str     0x0000000000066296     0x3d90 Output/blinky_FreeRTOS_pca10040 Release/Obj/heap_1.o
                                       0x657f1 (size before relaxing)
- .debug_str     0x0000000000069fae      0x187 Output/blinky_FreeRTOS_pca10040 Release/Obj/list.o
+ .debug_str     0x000000000006a026      0x187 Output/blinky_FreeRTOS_pca10040 Release/Obj/list.o
                                       0x65237 (size before relaxing)
- .debug_str     0x000000000006a135       0x85 Output/blinky_FreeRTOS_pca10040 Release/Obj/port.o
+ .debug_str     0x000000000006a1ad       0x85 Output/blinky_FreeRTOS_pca10040 Release/Obj/port.o
                                       0x65678 (size before relaxing)
- .debug_str     0x000000000006a1ba      0x534 Output/blinky_FreeRTOS_pca10040 Release/Obj/port_cmsis.o
+ .debug_str     0x000000000006a232      0x534 Output/blinky_FreeRTOS_pca10040 Release/Obj/port_cmsis.o
                                       0x65c54 (size before relaxing)
- .debug_str     0x000000000006a6ee     0x3344 Output/blinky_FreeRTOS_pca10040 Release/Obj/port_cmsis_systick.o
+ .debug_str     0x000000000006a766     0x3344 Output/blinky_FreeRTOS_pca10040 Release/Obj/port_cmsis_systick.o
                                       0x6cbdc (size before relaxing)
- .debug_str     0x000000000006da32     0x1038 Output/blinky_FreeRTOS_pca10040 Release/Obj/queue.o
+ .debug_str     0x000000000006daaa     0x1038 Output/blinky_FreeRTOS_pca10040 Release/Obj/queue.o
                                       0x66926 (size before relaxing)
- .debug_str     0x000000000006ea6a     0x19ac Output/blinky_FreeRTOS_pca10040 Release/Obj/tasks.o
+ .debug_str     0x000000000006eae2     0x19ac Output/blinky_FreeRTOS_pca10040 Release/Obj/tasks.o
                                       0x675bf (size before relaxing)
- .debug_str     0x0000000000070416      0x51c Output/blinky_FreeRTOS_pca10040 Release/Obj/timers.o
+ .debug_str     0x000000000007048e      0x51c Output/blinky_FreeRTOS_pca10040 Release/Obj/timers.o
                                       0x66dc4 (size before relaxing)
- .debug_str     0x0000000000070932      0x137 Output/blinky_FreeRTOS_pca10040 Release/Obj/app_error.o
+ .debug_str     0x00000000000709aa      0x137 Output/blinky_FreeRTOS_pca10040 Release/Obj/app_error.o
                                       0x5d2aa (size before relaxing)
- .debug_str     0x0000000000070a69     0x1191 Output/blinky_FreeRTOS_pca10040 Release/Obj/app_error_weak.o
+ .debug_str     0x0000000000070ae1     0x1191 Output/blinky_FreeRTOS_pca10040 Release/Obj/app_error_weak.o
                                       0x673a6 (size before relaxing)
- .debug_str     0x0000000000071bfa      0x223 Output/blinky_FreeRTOS_pca10040 Release/Obj/app_util_platform.o
+ .debug_str     0x0000000000071c72      0x223 Output/blinky_FreeRTOS_pca10040 Release/Obj/app_util_platform.o
                                       0x5da9c (size before relaxing)
- .debug_str     0x0000000000071e1d      0x964 Output/blinky_FreeRTOS_pca10040 Release/Obj/nrf_drv_clock.o
+ .debug_str     0x0000000000071e95      0x964 Output/blinky_FreeRTOS_pca10040 Release/Obj/nrf_drv_clock.o
                                       0x6904b (size before relaxing)
- .debug_str     0x0000000000072781      0x8f4 Output/blinky_FreeRTOS_pca10040 Release/Obj/nrfx_clock.o
+ .debug_str     0x00000000000727f9      0x8f4 Output/blinky_FreeRTOS_pca10040 Release/Obj/nrfx_clock.o
                                       0x69864 (size before relaxing)
- .debug_str     0x0000000000073075     0x18ed Output/blinky_FreeRTOS_pca10040 Release/Obj/nrfx_gpiote.o
+ .debug_str     0x00000000000730ed     0x18ed Output/blinky_FreeRTOS_pca10040 Release/Obj/nrfx_gpiote.o
                                       0x6a9db (size before relaxing)
- .debug_str     0x0000000000074962      0x530 Output/blinky_FreeRTOS_pca10040 Release/Obj/main.o
+ .debug_str     0x00000000000749da      0x530 Output/blinky_FreeRTOS_pca10040 Release/Obj/main.o
                                       0x6f108 (size before relaxing)
- .debug_str     0x0000000000074e92       0x68 Output/blinky_FreeRTOS_pca10040 Release/Obj/ses_nRF_Startup.o
+ .debug_str     0x0000000000074f0a       0x68 Output/blinky_FreeRTOS_pca10040 Release/Obj/ses_nRF_Startup.o
                                          0xf3 (size before relaxing)
- .debug_str     0x0000000000074efa       0x6a Output/blinky_FreeRTOS_pca10040 Release/Obj/ses_nrf52_Vectors.o
+ .debug_str     0x0000000000074f72       0x6a Output/blinky_FreeRTOS_pca10040 Release/Obj/ses_nrf52_Vectors.o
                                          0xf5 (size before relaxing)
- .debug_str     0x0000000000074f64      0x392 Output/blinky_FreeRTOS_pca10040 Release/Obj/system_nrf52.o
+ .debug_str     0x0000000000074fdc      0x392 Output/blinky_FreeRTOS_pca10040 Release/Obj/system_nrf52.o
                                       0x5bbf8 (size before relaxing)
 
 .debug_ranges   0x0000000000000000     0x17f8

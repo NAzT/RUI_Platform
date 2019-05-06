@@ -52,18 +52,16 @@
 #include "app_fifo.h"
 #include "app_uart.h"
 #include "boards.h"
-#include "nfc_t4t_lib.h"
 #include "sdk_config.h"
 
 #include "nrf_log_default_backends.h"
 #include "nrf_log_ctrl.h"
 #include "nrf_log.h"
+#include "nrf_delay.h"
+
 
 #define MAX_APDU_LEN      0xF0   /**< Maximal APDU length, Adafruit limitation. */
 #define HEADER_FIELD_SIZE 1      /**< Header field size. */
-
-static app_fifo_t m_nfc_rx_fifo; /**< FIFO instance for data that is received from NFC. */
-static app_fifo_t m_nfc_tx_fifo; /**< FIFO instance for data that will be transmitted over NFC. */
 
 
 /**
@@ -85,105 +83,10 @@ void uart_error_handle(app_uart_evt_t * p_event)
 /**
  * @brief Function for flushing all FIFOs that are used by the application.
  */
-static void fifos_flush(void)
-{
-    UNUSED_RETURN_VALUE(app_uart_flush());
-    UNUSED_RETURN_VALUE(app_fifo_flush(&m_nfc_rx_fifo));
-    UNUSED_RETURN_VALUE(app_fifo_flush(&m_nfc_tx_fifo));
-}
-
-
-/**
- * @brief Callback function for handling NFC events.
- */
-static void nfc_callback(void          * context,
-                         nfc_t4t_event_t event,
-                         const uint8_t * data,
-                         size_t          dataLength,
-                         uint32_t        flags)
-{
-    ret_code_t err_code;
-    uint32_t   resp_len;
-
-    static uint8_t  apdu_buf[APDU_BUFF_SIZE]; // Buffer for APDU data
-    static uint32_t apdu_len = 0;             // APDU length
-
-    (void)context;
-
-    switch (event)
-    {
-        case NFC_T4T_EVENT_FIELD_ON:
-            NRF_LOG_INFO("NFC Tag has been selected. UART transmission can start...");
-            bsp_board_led_on(BSP_BOARD_LED_0);
-
-            // Flush all FIFOs. Data that was collected from UART channel before selecting
-            // the tag is discarded.
-            fifos_flush();
-            break;
-
-        case NFC_T4T_EVENT_FIELD_OFF:
-            NRF_LOG_INFO("NFC field lost. Data from UART will be discarded...");
-            bsp_board_leds_off();
-            break;
-
-        case NFC_T4T_EVENT_DATA_IND:
-            if (apdu_len + dataLength > APDU_BUFF_SIZE)
-            {
-                APP_ERROR_HANDLER(NRF_ERROR_NO_MEM);
-            }
-            memcpy(apdu_buf + apdu_len, data, dataLength);
-            apdu_len += dataLength;
-
-            if (flags != NFC_T4T_DI_FLAG_MORE)
-            {
-                // Store data in NFC RX FIFO if payload is present.
-                if (apdu_len > HEADER_FIELD_SIZE)
-                {
-                    NRF_LOG_DEBUG("NFC RX data length: %d", apdu_len);
-                    uint32_t buff_size;
-
-                    apdu_len -= HEADER_FIELD_SIZE;
-                    buff_size = apdu_len;
-                    err_code  = app_fifo_write(&m_nfc_rx_fifo,
-                                               apdu_buf + HEADER_FIELD_SIZE,
-                                               &buff_size);
-                    if ((buff_size != apdu_len) || (err_code == NRF_ERROR_NO_MEM))
-                    {
-                        NRF_LOG_WARNING("NFC RX FIFO buffer overflow");
-                    }
-                }
-                apdu_len = 0;
-
-                // Check if there is any data in NFC TX FIFO that needs to be transmitted.
-                resp_len = MIN(APDU_BUFF_SIZE - HEADER_FIELD_SIZE, MAX_APDU_LEN);
-                if (app_fifo_read(&m_nfc_tx_fifo, apdu_buf + HEADER_FIELD_SIZE, &resp_len) ==
-                    NRF_ERROR_NOT_FOUND)
-                {
-                    resp_len = 0;
-                }
-
-                if (resp_len > 0)
-                {
-                    NRF_LOG_DEBUG("NFC TX data length: %d", resp_len);
-                }
-
-                // Send the response PDU over NFC.
-                err_code = nfc_t4t_response_pdu_send(apdu_buf, resp_len + HEADER_FIELD_SIZE);
-                APP_ERROR_CHECK(err_code);
-
-                bsp_board_led_off(BSP_BOARD_LED_1);
-            }
-            else
-            {
-                bsp_board_led_on(BSP_BOARD_LED_1);
-            }
-            break;
-
-        default:
-            break;
-    }
-}
-
+// static void fifos_flush(void)
+// {
+//     UNUSED_RETURN_VALUE(app_uart_flush());
+// } 
 
 /**
  * @brief Function for initializing UART module.
@@ -214,23 +117,6 @@ static ret_code_t uart_init(void)
 
 
 /**
- * @brief Function for initializing FIFO instances that are used to exchange data over NFC.
- */
-static ret_code_t nfc_fifos_init(void)
-{
-    ret_code_t err_code;
-
-    static uint8_t nfc_rx_buff[NFC_RX_BUFF_SIZE]; // Buffer for NFC RX FIFO instance
-    static uint8_t nfc_tx_buff[NFC_TX_BUFF_SIZE]; // Buffer for NFC TX FIFO instance
-
-    err_code = app_fifo_init(&m_nfc_rx_fifo, nfc_rx_buff, sizeof(nfc_rx_buff));
-    VERIFY_SUCCESS(err_code);
-
-    err_code = app_fifo_init(&m_nfc_tx_fifo, nfc_tx_buff, sizeof(nfc_tx_buff));
-    return err_code;
-}
-
-/**
  *@brief Function for initializing logging.
  */
 static void log_init(void)
@@ -256,41 +142,30 @@ int main(void)
 
     /* Set up UART */
     err_code = uart_init();
-    APP_ERROR_CHECK(err_code);
-
-    /* Set up FIFOs for data that are transfered over NFC */
-    err_code = nfc_fifos_init();
-    APP_ERROR_CHECK(err_code);
-
-    /* Set up NFC */
-    err_code = nfc_t4t_setup(nfc_callback, NULL);
-    APP_ERROR_CHECK(err_code);
-
-    NRF_LOG_INFO("NFC UART Tag example started.");
-
-    /* Start sensing NFC field */
-    err_code = nfc_t4t_emulation_start();
-    APP_ERROR_CHECK(err_code);
+    APP_ERROR_CHECK(err_code); 
+    NRF_LOG_INFO("HELLO EXAMPLE...");
 
     while (1)
     {
-        uint8_t msg_chunk;
+        // uint8_t msg_chunk; 
+        // // Transmit NFC data with UART.
+        // while (app_fifo_get(&m_nfc_rx_fifo, &msg_chunk) == NRF_SUCCESS)
+        // {
+        //     while (app_uart_put(msg_chunk) != NRF_SUCCESS);
+        // }
 
-        // Transmit NFC data with UART.
-        while (app_fifo_get(&m_nfc_rx_fifo, &msg_chunk) == NRF_SUCCESS)
-        {
-            while (app_uart_put(msg_chunk) != NRF_SUCCESS);
-        }
+        // // Handle data that come from UART.
+        // while (app_uart_get(&msg_chunk) == NRF_SUCCESS)
+        // {
+        //     if (app_fifo_put(&m_nfc_tx_fifo, msg_chunk) != NRF_SUCCESS)
+        //     {
+        //         NRF_LOG_WARNING("NFC TX FIFO buffer overflow");
+        //     }
+        // }
+        NRF_LOG_INFO("HELLO..");
+        // nrf_delay(100);
 
-        // Handle data that come from UART.
-        while (app_uart_get(&msg_chunk) == NRF_SUCCESS)
-        {
-            if (app_fifo_put(&m_nfc_tx_fifo, msg_chunk) != NRF_SUCCESS)
-            {
-                NRF_LOG_WARNING("NFC TX FIFO buffer overflow");
-            }
-        }
-
+        nrf_delay_ms(200);
         NRF_LOG_FLUSH();
     }
 }

@@ -20,112 +20,41 @@
 #include "hal_uart.h"
 
 
+
+void Gps_Gpio_Init()
+{
+    nrf_gpio_cfg_output(GPS_PWR_ON_PIN);
+    nrf_gpio_cfg_output(GPS_RESET_PIN);
+    nrf_gpio_cfg_input(GPS_STANDBY_PIN,NRF_GPIO_PIN_PULLUP);    
+}
+
+void Gps_power_up( void )
+{
+    GPS_PWR_OFF;
+    delay_ms(1000);
+    GPS_PWR_ON;
+
+    GPS_RESET_LOW;
+    delay_ms(2000);
+    GPS_RESET_HIGH;
+}
+
+void Gps_Init(void)
+{
+    Gps_Gpio_Init();
+    Gps_power_up();
+}
+
+void Gps_standby(void)
+{
+     nrf_gpio_cfg_output(GPS_STANDBY_PIN);
+     nrf_gpio_pin_write (GPS_STANDBY_PIN, 0);
+}
+
 void sensors_init()
 {
     int ret;
-#if defined(BC95G_TEST) || defined(M35_TEST) || defined(BG96_TEST)
     // init gsm
-    Gsm_Init();
-#endif
-#ifdef L70R_TEST
-    // init gps
+    // Gsm_Init();
     Gps_Init();
-#endif
-
-#ifdef LORA_TEST
-    lora_init();
-#endif
-
-#ifdef BEM280_TEST
-    ret = bme280_spi_init();
-    if(ret != NRF_SUCCESS)
-    {
-        NRF_LOG_INFO( "bme280_spi_init fail %d\r\n", ret);
-    }
-    else
-    {
-        ret = _bme280_init();
-        if(ret < 0)
-        {
-            NRF_LOG_INFO( "lis3dh_init fail\r\n");
-        }
-    }
-#endif
-#ifdef LIS3DH_TEST
-    //config interrupt   
-    ret = lis3dh_twi_init();
-    if(ret != NRF_SUCCESS)
-    {
-        NRF_LOG_INFO( "lis3dh_twi_init fail %d\r\n", ret);
-    }
-    else
-    {
-        ret = lis3dh_init();
-        if(ret < 0)
-        {
-            NRF_LOG_INFO( "lis3dh_init fail\r\n");
-        }
-    }
-#endif
-#ifdef LIS2MDL_TEST
-    ret = lis2mdl_twi_init();
-    if(ret < 0)
-    {
-        NRF_LOG_INFO( "lis2mdl_twi_init fail %d\r\n", ret);
-    }
-    else
-    {
-        ret = lis2mdl_init();
-        if(ret < 0)
-        {
-            NRF_LOG_INFO( "lis2mdl_init fail\r\n");
-        }
-    }
-#endif
-#ifdef OPT3001_TEST
-    ret = opt3001_twi_init();
-    if(ret < 0)
-    {
-        NRF_LOG_INFO( "opt3001_twi_init fail %d\r\n", ret);
-    }
-    else
-    {
-        ret = opt3001_init();
-        if(ret < 0)
-        {
-            NRF_LOG_INFO( "opt3001_init fail\r\n");
-        }
-    }
-#endif
-
-#ifdef SHT31_TEST
-    ret = sht31_init();
-    if(ret < 0)
-    {
-        NRF_LOG_INFO( "sht31_init fail %d\r\n", ret);
-    }
-#endif
-
-#ifdef MAX7_TEST
-    ret =max_init();
-    if(ret < 0)
-    {
-        NRF_LOG_INFO( "max_init fail %d\r\n", ret);
-    }
-    gps_setup();
-#endif
-
-#ifdef SHTC3_TEST
-    SHTC3_Init();
-#endif
-
-#ifdef LPS22HB_TEST
-
-       ret = lps22hb_twi_init();
-       if(ret < 0)
-       {
-        	NRF_LOG_INFO( "lps22hb_twi_init fail %d\r\n", ret);
-       }
-       	lps22hb_init();
-#endif
 }
