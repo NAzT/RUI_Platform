@@ -95,10 +95,10 @@ void itracker_function_init()
 {
     NRF_LOG_INFO("itracker_function_init");
     memset(&itracker_function,0,sizeof(itracker_function));
-    rak_uart_init(GPS_USE_UART,GPS_RXD_PIN,GPS_TXD_PIN,UART_BAUDRATE_BAUDRATE_Baud9600);
+    //rak_uart_init(GPS_USE_UART,GPS_RXD_PIN,GPS_TXD_PIN,UART_BAUDRATE_BAUDRATE_Baud9600);
     itracker_function.gps_get = gps_data_get_bus;
     NRF_LOG_INFO(">>>> /itracker_function_init");
 
-    // itracker_function.communicate_send = Gsm_print;
-    // itracker_function.communicate_response = Gsm_wait_response;
+    //itracker_function.communicate_send = Gsm_print;
+    //itracker_function.communicate_response = Gsm_wait_response;
 }

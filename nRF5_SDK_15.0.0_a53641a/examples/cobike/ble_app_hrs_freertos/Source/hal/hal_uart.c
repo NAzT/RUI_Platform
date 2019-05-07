@@ -21,7 +21,7 @@ void uart_event_handle(app_uart_evt_t * p_event)
 {
     static uint8_t index = 0;
     uint32_t       err_code;
-    NRF_LOG_INFO("000000000");
+    NRF_LOG_INFO("hal_uart.c");
 
     switch (p_event->evt_type)
     {

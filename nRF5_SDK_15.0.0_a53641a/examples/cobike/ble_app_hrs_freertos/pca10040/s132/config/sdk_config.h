@@ -4231,7 +4231,7 @@
 #endif
 // <o> NRFX_UARTE0_ENABLED - Enable UARTE0 instance 
 #ifndef NRFX_UARTE0_ENABLED
-#define NRFX_UARTE0_ENABLED 0
+#define NRFX_UARTE0_ENABLED 1
 #endif
 
 // <o> NRFX_UARTE_DEFAULT_CONFIG_HWFC  - Hardware Flow Control
@@ -7196,7 +7196,7 @@
  
 
 #ifndef NRF_CLI_LOG_BACKEND
-#define NRF_CLI_LOG_BACKEND 0
+#define NRF_CLI_LOG_BACKEND 1
 #endif
 
 // <q> NRF_CLI_USES_TASK_MANAGER_ENABLED  - Enable CLI to use task_manager
@@ -7517,7 +7517,7 @@
 // <4=> Debug 
 
 #ifndef NRF_MPU_CONFIG_LOG_LEVEL
-#define NRF_MPU_CONFIG_LOG_LEVEL 4
+#define NRF_MPU_CONFIG_LOG_LEVEL 3
 #endif
 
 // <o> NRF_MPU_CONFIG_INFO_COLOR  - ANSI escape code prefix.
@@ -9479,7 +9479,7 @@
 // <4=> Debug 
 
 #ifndef NRF_SDH_BLE_LOG_LEVEL
-#define NRF_SDH_BLE_LOG_LEVEL 3
+#define NRF_SDH_BLE_LOG_LEVEL 4
 #endif
 
 // <o> NRF_SDH_BLE_INFO_COLOR  - ANSI escape code prefix.
@@ -9581,7 +9581,7 @@
 // <4=> Debug 
 
 #ifndef NRF_SDH_SOC_LOG_LEVEL
-#define NRF_SDH_SOC_LOG_LEVEL 3
+#define NRF_SDH_SOC_LOG_LEVEL 4
 #endif
 
 // <o> NRF_SDH_SOC_INFO_COLOR  - ANSI escape code prefix.
@@ -12241,4 +12241,3 @@
 
 // <<< end of configuration section >>>
 #endif //SDK_CONFIG_H
-

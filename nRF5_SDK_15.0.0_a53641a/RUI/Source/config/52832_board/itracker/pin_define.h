@@ -108,8 +108,8 @@
 
 */
 #define             GPS_STANDBY_PIN                        7
-#define             GPS_TXD_PIN                        8
-#define             GPS_RXD_PIN                        9
+#define             GPS_TXD_PIN                        9
+#define             GPS_RXD_PIN                        8
 #define 		  GPS_PWR_ON_PIN											10
 #define             GPS_RESET_PIN                        31
 

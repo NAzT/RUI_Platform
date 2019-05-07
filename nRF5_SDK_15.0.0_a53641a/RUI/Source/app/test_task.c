@@ -24,10 +24,6 @@ extern double gps_lon;
 void test_task(void * pvParameter)
 {
     uint8_t gps_rsp[128] = {0};
-    uint8_t lora_data[128] = {0};
-    uint8_t lora_len_acc = 0;
-    uint8_t lora_len_t_h = 0;
-    uint8_t lora_len_gps = 0;
     double temp = 0;
     double humidity = 0;
     double pressure = 0;

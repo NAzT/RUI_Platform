@@ -73,8 +73,8 @@ uint32_t get_lis3dh_data_bus(int *x, int *y, int *z)
 // #endif
 uint32_t gps_data_get_bus(uint8_t *data, uint32_t len)
 {
-    uint32_t ret = 0;
-    rak_uart_init(GPS_USE_UART,GPS_RXD_PIN,GPS_TXD_PIN,UART_BAUDRATE_BAUDRATE_Baud9600);
+    NRF_LOG_INFO("gps_data_get_bus len=%lu\r\n", len);
+    uint32_t ret = 0; 
     if(data == NULL || len < 0)
     {
         return 1;
@@ -95,7 +95,8 @@ void itracker_function_init()
 {
     NRF_LOG_INFO("itracker_function_init");
     memset(&itracker_function,0,sizeof(itracker_function));
-    rak_uart_init(GPS_USE_UART,GPS_RXD_PIN,GPS_TXD_PIN,UART_BAUDRATE_BAUDRATE_Baud9600);
+    rak_uart_init(GPS_USE_UART, GPS_RXD_PIN, GPS_TXD_PIN, UART_BAUDRATE_BAUDRATE_Baud9600);
+    // rak_uart_init(GPS_USE_UART,GPS_RXD_PIN,GPS_TXD_PIN,UART_BAUDRATE_BAUDRATE_Baud9600);
     itracker_function.gps_get = gps_data_get_bus;
     NRF_LOG_INFO("/itracker_function_init");
 

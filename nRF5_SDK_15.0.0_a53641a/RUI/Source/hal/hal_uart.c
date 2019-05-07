@@ -16,35 +16,22 @@
 uart_run_t uart_use = UART_IDLE;
 
 
-
 void uart_event_handle(app_uart_evt_t * p_event)
 {
     static uint8_t index = 0;
     uint32_t       err_code;
-    NRF_LOG_INFO("000000000");
 
     switch (p_event->evt_type)
     {
     case APP_UART_DATA_READY:
-// #if	defined(BC95G_TEST) || defined(M35_TEST) || defined(BG96_TEST)
-
-//         if(uart_use == GSM_USE_UART)
-//         {
-//             uint8_t rx_data;
-//             app_uart_get(&rx_data);
-//             Gsm_RingBuf(rx_data);
-//         }
-// #endif
-// #if defined(L70R_TEST) ||  defined(BG96_TEST)
-                NRF_LOG_INFO("1XYZ");
         if(uart_use == GPS_USE_UART)
         {
             uint8_t rx_data;
             if( app_uart_get( &rx_data ) == 0 )
             {
                 //Gps_data_update(rx_data);
-                NRF_LOG_INFO("XYZ");
                 SEGGER_RTT_printf(0, "%c", rx_data);
+                // NRF_LOG_INFO("%c", rx_data);
             }
 
         }

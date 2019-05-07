@@ -22,6 +22,7 @@ extern double gps_lon;
 
 void test_task(void * pvParameter)
 {
+
     uint8_t gps_rsp[128] = {0};
     double temp = 0;
     double humidity = 0;
@@ -32,10 +33,11 @@ void test_task(void * pvParameter)
     float light = 0;
     double lat = 0;
     double lon = 0;
+    NRF_LOG_INFO("x test begin++++++++++++++++\r\n");
     while(1)
     {
         NRF_LOG_INFO("++++++++++++++++test begin++++++++++++++++\r\n");
-        // power_save_close();
+        power_save_close();
 
         // itracker_function.acceleration_get(&x,&y,&z);
         // NRF_LOG_INFO("acceleration x,y,z = %d mg,%d mg,%d mg",x,y,z); 

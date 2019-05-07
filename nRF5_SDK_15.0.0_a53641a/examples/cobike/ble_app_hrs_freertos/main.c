@@ -781,7 +781,7 @@ int main(void)
     log_init();
     //clock init
     nrf_drv_clock_init();
-
+    NRF_LOG_INFO("HELLO..");
     // Activate deep sleep mode.
     // Nat
 
@@ -801,7 +801,7 @@ int main(void)
     // Create a FreeRTOS task for the BLE stack. The task will run advertising_start() before entering its loop.
     nrf_sdh_freertos_init(advertising_start, NULL);
 
-    NRF_LOG_INFO("nat ACCESS_NET_TEST")
+    NRF_LOG_INFO("Creating RTOS task.")
 //#ifdef ACCESS_NET_TEST
 //    NRF_LOG_INFO("nat ACCESS_NET_TEST")
 //    vSemaphoreCreateBinary(xBinarySemaphore_iot);
@@ -815,9 +815,10 @@ int main(void)
 //	xReturned = xTaskCreate(nb_iot_task, "nb_iot", 512*2, NULL, 2, NULL);
 //
 //#else
-    xReturned = xTaskCreate(test_task, "test", 1024, NULL, 2, NULL);
+    xReturned = xTaskCreate(test_task, "testx", 1024, NULL, 2, NULL);
+     NRF_LOG_INFO("Created.")
 //#endif
-
+    NRF_LOG_INFO("being started vTaskStartScheduler.");
 
     // Start FreeRTOS scheduler.
 

@@ -47,8 +47,8 @@
 		P029_UART1_TX
 
 */
-#define             LOG_RXD_PIN                        28
-#define             LOG_TXD_PIN                        29
+//#define             LOG_RXD_PIN                        28
+//#define             LOG_TXD_PIN                        29
 
 /*
 		GSM PIN Assignment
