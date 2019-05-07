@@ -13,7 +13,23 @@
  <Project>
   <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132"/>
   <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;app"/>
   <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;Application"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;board"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;Board Definition"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;Board Support"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;config"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;hal"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;include"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;None"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;nRF_BLE"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;nRF_Drivers"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;nRF_Libraries"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;nRF_Log"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;nRF_Segger_RTT"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;nRF_SoftDevice"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;service"/>
+  <ProjectSessionItem path="ble_app_hrs_freertos_pca10040_s132;ble_app_hrs_freertos_pca10040_s132;Third Parties"/>
  </Project>
  <Register1/>
  <Register2/>
@@ -38,7 +54,12 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="870" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="841" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="38" y="19" useTextEdit="1" useBinaryEdit="0" left="25" path="ble_app_hrs_freertos_pca10040_s132.emProject" selected="0" top="14" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="835" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="835" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="29" y="98" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../Source/board/itracker_basic.c" selected="0" top="90" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="1" y="19" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../Source/board/board_basic.c" selected="0" top="7" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="25" y="45" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../Source/app/test_task.c" selected="0" top="33" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="0" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../components/boards/boards.c" selected="0" top="38" codecName="Default"/>
  </Files>
- <ARMCrossStudioWindow activeProject="ble_app_hrs_freertos_pca10040_s132" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3199"/>
+ <ARMCrossStudioWindow activeProject="ble_app_hrs_freertos_pca10040_s132" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Debug" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3711"/>
 </session>

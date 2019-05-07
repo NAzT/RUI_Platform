@@ -15,7 +15,7 @@
       arm_simulator_memory_simulation_parameter="RWX 00000000,00100000,FFFFFFFF;RWX 20000000,00010000,CDCDCDCD"
       arm_target_device_name="nRF52832_xxAA"
       arm_target_interface_type="SWD"
-      c_user_include_directories="../../../config;../../../../../../components;../../../../../../components/ble/ble_advertising;../../../../../../components/ble/ble_dtm;../../../../../../components/ble/ble_racp;../../../../../../components/ble/ble_services/ble_ancs_c;../../../../../../components/ble/ble_services/ble_ans_c;../../../../../../components/ble/ble_services/ble_bas;../../../../../../components/ble/ble_services/ble_bas_c;../../../../../../components/ble/ble_services/ble_cscs;../../../../../../components/ble/ble_services/ble_cts_c;../../../../../../components/ble/ble_services/ble_dfu;../../../../../../components/ble/ble_services/ble_dis;../../../../../../components/ble/ble_services/ble_gls;../../../../../../components/ble/ble_services/ble_hids;../../../../../../components/ble/ble_services/ble_hrs;../../../../../../components/ble/ble_services/ble_hrs_c;../../../../../../components/ble/ble_services/ble_hts;../../../../../../components/ble/ble_services/ble_ias;../../../../../../components/ble/ble_services/ble_ias_c;../../../../../../components/ble/ble_services/ble_lbs;../../../../../../components/ble/ble_services/ble_lbs_c;../../../../../../components/ble/ble_services/ble_lls;../../../../../../components/ble/ble_services/ble_nus;../../../../../../components/ble/ble_services/ble_nus_c;../../../../../../components/ble/ble_services/ble_rscs;../../../../../../components/ble/ble_services/ble_rscs_c;../../../../../../components/ble/ble_services/ble_tps;../../../../../../components/ble/common;../../../../../../components/ble/nrf_ble_gatt;../../../../../../components/ble/nrf_ble_qwr;../../../../../../components/ble/peer_manager;../../../../../../components/boards;../../../../../../components/drivers_nrf/usbd;../../../../../../components/libraries/atomic;../../../../../../components/libraries/atomic_fifo;../../../../../../components/libraries/atomic_flags;../../../../../../components/libraries/balloc;../../../../../../components/libraries/bootloader/ble_dfu;../../../../../../components/libraries/bsp;../../../../../../components/libraries/button;../../../../../../components/libraries/cli;../../../../../../components/libraries/crc16;../../../../../../components/libraries/crc32;../../../../../../components/libraries/crypto;../../../../../../components/libraries/csense;../../../../../../components/libraries/csense_drv;../../../../../../components/libraries/delay;../../../../../../components/libraries/ecc;../../../../../../components/libraries/experimental_log;../../../../../../components/libraries/experimental_log/src;../../../../../../components/libraries/experimental_memobj;../../../../../../components/libraries/experimental_mpu;../../../../../../components/libraries/experimental_ringbuf;../../../../../../components/libraries/experimental_section_vars;../../../../../../components/libraries/experimental_stack_guard;../../../../../../components/libraries/experimental_task_manager;../../../../../../components/libraries/fds;../../../../../../components/libraries/fstorage;../../../../../../components/libraries/gfx;../../../../../../components/libraries/gpiote;../../../../../../components/libraries/hardfault;../../../../../../components/libraries/hardfault/nrf52;../../../../../../components/libraries/hci;../../../../../../components/libraries/led_softblink;../../../../../../components/libraries/low_power_pwm;../../../../../../components/libraries/mem_manager;../../../../../../components/libraries/mutex;../../../../../../components/libraries/pwm;../../../../../../components/libraries/pwr_mgmt;../../../../../../components/libraries/queue;../../../../../../components/libraries/scheduler;../../../../../../components/libraries/sdcard;../../../../../../components/libraries/sensorsim;../../../../../../components/libraries/slip;../../../../../../components/libraries/sortlist;../../../../../../components/libraries/spi_mngr;../../../../../../components/libraries/strerror;../../../../../../components/libraries/timer;../../../../../../components/libraries/twi_mngr;../../../../../../components/libraries/twi_sensor;../../../../../../components/libraries/usbd;../../../../../../components/libraries/usbd/class/audio;../../../../../../components/libraries/usbd/class/cdc;../../../../../../components/libraries/usbd/class/cdc/acm;../../../../../../components/libraries/usbd/class/hid;../../../../../../components/libraries/usbd/class/hid/generic;../../../../../../components/libraries/usbd/class/hid/kbd;../../../../../../components/libraries/usbd/class/hid/mouse;../../../../../../components/libraries/usbd/class/msc;../../../../../../components/libraries/usbd/config;../../../../../../components/libraries/util;../../../../../../components/nfc/ndef/conn_hand_parser;../../../../../../components/nfc/ndef/conn_hand_parser/ac_rec_parser;../../../../../../components/nfc/ndef/conn_hand_parser/ble_oob_advdata_parser;../../../../../../components/nfc/ndef/conn_hand_parser/le_oob_rec_parser;../../../../../../components/nfc/ndef/connection_handover/ac_rec;../../../../../../components/nfc/ndef/connection_handover/ble_oob_advdata;../../../../../../components/nfc/ndef/connection_handover/ble_pair_lib;../../../../../../components/nfc/ndef/connection_handover/ble_pair_msg;../../../../../../components/nfc/ndef/connection_handover/common;../../../../../../components/nfc/ndef/connection_handover/ep_oob_rec;../../../../../../components/nfc/ndef/connection_handover/hs_rec;../../../../../../components/nfc/ndef/connection_handover/le_oob_rec;../../../../../../components/nfc/ndef/generic/message;../../../../../../components/nfc/ndef/generic/record;../../../../../../components/nfc/ndef/launchapp;../../../../../../components/nfc/ndef/parser/message;../../../../../../components/nfc/ndef/parser/record;../../../../../../components/nfc/ndef/text;../../../../../../components/nfc/ndef/uri;../../../../../../components/nfc/t2t_lib;../../../../../../components/nfc/t2t_lib/hal_t2t;../../../../../../components/nfc/t2t_parser;../../../../../../components/nfc/t4t_lib;../../../../../../components/nfc/t4t_lib/hal_t4t;../../../../../../components/nfc/t4t_parser/apdu;../../../../../../components/nfc/t4t_parser/cc_file;../../../../../../components/nfc/t4t_parser/hl_detection_procedure;../../../../../../components/nfc/t4t_parser/tlv;../../../../../../components/softdevice/common;../../../../../../components/softdevice/s132/headers;../../../../../../components/softdevice/s132/headers/nrf52;../../../../../../components/toolchain/cmsis/include;../../../../../../external/fprintf;../../../../../../external/freertos/config;../../../../../../external/freertos/portable/CMSIS/nrf52;../../../../../../external/freertos/portable/GCC/nrf52;../../../../../../external/freertos/source/include;../../../../../../external/segger_rtt;../../../../../../integration/nrfx;../../../../../../integration/nrfx/legacy;../../../../../../modules/nrfx;../../../../../../modules/nrfx/drivers/include;../../../../../../modules/nrfx/hal;../../../../../../modules/nrfx/mdk;../config;"
+      c_user_include_directories="../../../../../../components/libraries/fifo;../../../../../../components/libraries/crypto/backend/micro_ecc;../../../Source/include;../../../Source/config;../../../config;../../../../../../components;../../../../../../components/ble/ble_advertising;../../../../../../components/ble/ble_dtm;../../../../../../components/ble/ble_racp;../../../../../../components/ble/ble_services/ble_ancs_c;../../../../../../components/ble/ble_services/ble_ans_c;../../../../../../components/ble/ble_services/ble_bas;../../../../../../components/ble/ble_services/ble_bas_c;../../../../../../components/ble/ble_services/ble_cscs;../../../../../../components/ble/ble_services/ble_cts_c;../../../../../../components/ble/ble_services/ble_dfu;../../../../../../components/ble/ble_services/ble_dis;../../../../../../components/ble/ble_services/ble_gls;../../../../../../components/ble/ble_services/ble_hids;../../../../../../components/ble/ble_services/ble_hrs;../../../../../../components/ble/ble_services/ble_hrs_c;../../../../../../components/ble/ble_services/ble_hts;../../../../../../components/ble/ble_services/ble_ias;../../../../../../components/ble/ble_services/ble_ias_c;../../../../../../components/ble/ble_services/ble_lbs;../../../../../../components/ble/ble_services/ble_lbs_c;../../../../../../components/ble/ble_services/ble_lls;../../../../../../components/ble/ble_services/ble_nus;../../../../../../components/ble/ble_services/ble_nus_c;../../../../../../components/ble/ble_services/ble_rscs;../../../../../../components/ble/ble_services/ble_rscs_c;../../../../../../components/ble/ble_services/ble_tps;../../../../../../components/ble/common;../../../../../../components/ble/nrf_ble_gatt;../../../../../../components/ble/nrf_ble_qwr;../../../../../../components/ble/peer_manager;../../../../../../components/boards;../../../../../../components/drivers_nrf/usbd;../../../../../../components/libraries/atomic;../../../../../../components/libraries/atomic_fifo;../../../../../../components/libraries/atomic_flags;../../../../../../components/libraries/balloc;../../../../../../components/libraries/bootloader/ble_dfu;../../../../../../components/libraries/button;../../../../../../components/libraries/cli;../../../../../../components/libraries/crc16;../../../../../../components/libraries/crc32;../../../../../../components/libraries/crypto;../../../../../../components/libraries/csense;../../../../../../components/libraries/csense_drv;../../../../../../components/libraries/delay;../../../../../../components/libraries/ecc;../../../../../../components/libraries/experimental_log;../../../../../../components/libraries/experimental_log/src;../../../../../../components/libraries/experimental_memobj;../../../../../../components/libraries/experimental_mpu;../../../../../../components/libraries/experimental_ringbuf;../../../../../../components/libraries/experimental_section_vars;../../../../../../components/libraries/experimental_stack_guard;../../../../../../components/libraries/experimental_task_manager;../../../../../../components/libraries/fds;../../../../../../components/libraries/fstorage;../../../../../../components/libraries/gfx;../../../../../../components/libraries/gpiote;../../../../../../components/libraries/hardfault;../../../../../../components/libraries/hardfault/nrf52;../../../../../../components/libraries/hci;../../../../../../components/libraries/led_softblink;../../../../../../components/libraries/low_power_pwm;../../../../../../components/libraries/mem_manager;../../../../../../components/libraries/mutex;../../../../../../components/libraries/pwm;../../../../../../components/libraries/pwr_mgmt;../../../../../../components/libraries/queue;../../../../../../components/libraries/scheduler;../../../../../../components/libraries/sdcard;../../../../../../components/libraries/sensorsim;../../../../../../components/libraries/slip;../../../../../../components/libraries/sortlist;../../../../../../components/libraries/spi_mngr;../../../../../../components/libraries/strerror;../../../../../../components/libraries/timer;../../../../../../components/libraries/twi_mngr;../../../../../../components/libraries/twi_sensor;../../../../../../components/libraries/usbd;../../../../../../components/libraries/usbd/class/audio;../../../../../../components/libraries/usbd/class/cdc;../../../../../../components/libraries/usbd/class/cdc/acm;../../../../../../components/libraries/usbd/class/hid;../../../../../../components/libraries/usbd/class/hid/generic;../../../../../../components/libraries/usbd/class/hid/kbd;../../../../../../components/libraries/usbd/class/hid/mouse;../../../../../../components/libraries/usbd/class/msc;../../../../../../components/libraries/usbd/config;../../../../../../components/libraries/util;../../../../../../components/nfc/ndef/conn_hand_parser;../../../../../../components/nfc/ndef/conn_hand_parser/ac_rec_parser;../../../../../../components/nfc/ndef/conn_hand_parser/ble_oob_advdata_parser;../../../../../../components/nfc/ndef/conn_hand_parser/le_oob_rec_parser;../../../../../../components/nfc/ndef/connection_handover/ac_rec;../../../../../../components/nfc/ndef/connection_handover/ble_oob_advdata;../../../../../../components/nfc/ndef/connection_handover/ble_pair_lib;../../../../../../components/nfc/ndef/connection_handover/ble_pair_msg;../../../../../../components/nfc/ndef/connection_handover/common;../../../../../../components/nfc/ndef/connection_handover/ep_oob_rec;../../../../../../components/nfc/ndef/connection_handover/hs_rec;../../../../../../components/nfc/ndef/connection_handover/le_oob_rec;../../../../../../components/nfc/ndef/generic/message;../../../../../../components/nfc/ndef/generic/record;../../../../../../components/nfc/ndef/launchapp;../../../../../../components/nfc/ndef/parser/message;../../../../../../components/nfc/ndef/parser/record;../../../../../../components/nfc/ndef/text;../../../../../../components/nfc/ndef/uri;../../../../../../components/nfc/t2t_lib;../../../../../../components/nfc/t2t_lib/hal_t2t;../../../../../../components/nfc/t2t_parser;../../../../../../components/nfc/t4t_lib;../../../../../../components/nfc/t4t_lib/hal_t4t;../../../../../../components/nfc/t4t_parser/apdu;../../../../../../components/nfc/t4t_parser/cc_file;../../../../../../components/nfc/t4t_parser/hl_detection_procedure;../../../../../../components/nfc/t4t_parser/tlv;../../../../../../components/softdevice/common;../../../../../../components/softdevice/s132/headers;../../../../../../components/softdevice/s132/headers/nrf52;../../../../../../components/toolchain/cmsis/include;../../../../../../external/fprintf;../../../../../../external/freertos/config;../../../../../../external/freertos/portable/CMSIS/nrf52;../../../../../../external/freertos/portable/GCC/nrf52;../../../../../../external/freertos/source/include;../../../../../../external/segger_rtt;../../../../../../integration/nrfx;../../../../../../integration/nrfx/legacy;../../../../../../modules/nrfx;../../../../../../modules/nrfx/drivers/include;../../../../../../modules/nrfx/hal;../../../../../../modules/nrfx/mdk;../config;../../../../../../components/libraries/uart;../../../../../../components/libraries/util;../../../../../../components/toolchain/cmsis/include;../../..;../../../../../../integration/nrfx;../../../../../../integration/nrfx/legacy;../../../../../../modules/nrfx;../../../../../../modules/nrfx/drivers/include;../../../../../../modules/nrfx/hal;../../../../../../modules/nrfx/mdk;../../../../../../components/ble/ble_link_ctx_manager;../../../../../../components/libraries/bsp;;../../../../../../components/ble/ble_services/ble_nus;../../../../../../components/ble/ble_services/ble_nus_c;../../../../../../components/ble/ble_services/ble_rscs;../../../../../../components/ble/ble_services/ble_rscs_c;../../../../../../components/ble/ble_services/;"
       c_preprocessor_definitions="BOARD_PCA10040;CONFIG_GPIO_AS_PINRESET;FLOAT_ABI_HARD;FREERTOS;INITIALIZE_USER_SECTIONS;NO_VTOR_CONFIG;NRF52;NRF52832_XXAA;NRF52_PAN_74;NRF_SD_BLE_API_VERSION=6;S132;SOFTDEVICE_PRESENT;"
       debug_target_connection="J-Link"
       gcc_entry_point="Reset_Handler"
@@ -43,6 +43,9 @@
       <file file_name="../../../../../../components/libraries/experimental_log/src/nrf_log_str_formatter.c" />
     </folder>
     <folder Name="nRF_Libraries">
+      <file file_name="../../../../../../components/libraries/fifo/app_fifo.c" />
+      <file file_name="../../../../../../components/libraries/uart/app_uart_fifo.c" />
+      <file file_name="../../../../../../components/libraries/uart/retarget.c" />    
       <file file_name="../../../../../../components/libraries/button/app_button.c" />
       <file file_name="../../../../../../components/libraries/util/app_error.c" />
       <file file_name="../../../../../../components/libraries/util/app_error_handler_gcc.c" />
@@ -66,7 +69,7 @@
       <file file_name="../../../../../../components/libraries/experimental_section_vars/nrf_section_iter.c" />
       <file file_name="../../../../../../components/libraries/strerror/nrf_strerror.c" />
       <file file_name="../../../../../../components/libraries/sensorsim/sensorsim.c" />
-    </folder>
+    </folder>    
     <folder Name="None">
       <file file_name="../../../../../../modules/nrfx/mdk/ses_nRF_Startup.s" />
       <file file_name="../../../../../../modules/nrfx/mdk/ses_nrf52_Vectors.s" />
@@ -97,6 +100,7 @@
       <file file_name="../../../../../../modules/nrfx/drivers/src/prs/nrfx_prs.c" />
       <file file_name="../../../../../../modules/nrfx/drivers/src/nrfx_uart.c" />
       <file file_name="../../../../../../modules/nrfx/drivers/src/nrfx_uarte.c" />
+
     </folder>
     <folder Name="Board Support">
       <file file_name="../../../../../../components/libraries/bsp/bsp.c" />
@@ -135,6 +139,10 @@
       <file file_name="../../../../../../components/ble/ble_services/ble_bas/ble_bas.c" />
       <file file_name="../../../../../../components/ble/ble_services/ble_dis/ble_dis.c" />
       <file file_name="../../../../../../components/ble/ble_services/ble_hrs/ble_hrs.c" />
+      <file file_name="../../../../../../components/ble/ble_link_ctx_manager/ble_link_ctx_manager.c" />
+    </folder>
+        <folder Name="nRF_BLE_Services">
+      <file file_name="../../../../../../components/ble/ble_services/ble_nus/ble_nus.c" />
     </folder>
     <folder Name="nRF_SoftDevice">
       <file file_name="../../../../../../components/softdevice/common/nrf_sdh.c" />
@@ -142,6 +150,89 @@
       <file file_name="../../../../../../components/softdevice/common/nrf_sdh_freertos.c" />
       <file file_name="../../../../../../components/softdevice/common/nrf_sdh_soc.c" />
     </folder>
+<folder Name="app">
+  <file file_name="../../../Source/app/test_task.c" />
+</folder>
+
+
+<folder Name="board">
+  <file file_name="../../../Source/board/board_basic.c" />
+  <file file_name="../../../Source/board/itracker_basic.c" />
+</folder>
+
+<folder Name="config">
+  <file file_name="../../../Source/config/52832_board" />
+  <file file_name="../../../Source/config/52832_board/itracker" />
+  <file file_name="../../../Source/config/52832_board/itracker/sdk_config.h" />
+  <file file_name="../../../Source/config/52832_board/itracker/pin_define.h" />
+</folder>
+
+<folder Name="hal">
+  <file file_name="../../../Source/hal/hal_i2c.c" />
+  <file file_name="../../../Source/hal/hal_spi.c" />
+  <file file_name="../../../Source/hal/hal_gpio.c" />
+  <file file_name="../../../Source/hal/hal_uart.c" />
+</folder>
+
+<folder Name="include">
+  <file file_name="../../../Source/include/gps.h" />
+  <file file_name="../../../Source/include/utils.h" />
+  <file file_name="../../../Source/include/sensor.h" />
+  <file file_name="../../../Source/include/hal_uart.h" />
+  <file file_name="../../../Source/include/gps_max7.h" />
+  <file file_name="../../../Source/include/utilities.h" />
+  <file file_name="../../../Source/include/Commissioning.h" />
+  <file file_name="../../../Source/include/FreeRTOSConfig.h" />
+  <file file_name="../../../Source/include/hal_i2c.h" />
+  <file file_name="../../../Source/include/sx1276_lora.h" />
+  <file file_name="../../../Source/include/itracker.h" />
+  <file file_name="../../../Source/include/board_basic.h" />
+  <file file_name="../../../Source/include/hal_gpio.h" />
+  <file file_name="../../../Source/include/hal_spi.h" />
+</folder>
+
+<folder Name="external">
+  <file file_name="../../../Source/external/utils.c" />
+  <file file_name="../../../Source/external/utilities.c" />
+  <file file_name="../../../Source/external/micro-ecc" />
+  <file file_name="../../../Source/external/micro-ecc/uECC.h" />
+  <file file_name="../../../Source/external/micro-ecc/asm_avr_mult_square.inc" />
+  <file file_name="../../../Source/external/micro-ecc/uECC_vli.h" />
+  <file file_name="../../../Source/external/micro-ecc/curve-specific.inc" />
+  <file file_name="../../../Source/external/micro-ecc/types.h" />
+  <file file_name="../../../Source/external/micro-ecc/README.md" />
+  <file file_name="../../../Source/external/micro-ecc/asm_arm.inc" />
+  <file file_name="../../../Source/external/micro-ecc/asm_arm_mult_square_umaal.inc" />
+  <file file_name="../../../Source/external/micro-ecc/platform-specific.inc" />
+  <file file_name="../../../Source/external/micro-ecc/uECC.c" />
+  <file file_name="../../../Source/external/micro-ecc/.gitignore" />
+  <file file_name="../../../Source/external/micro-ecc/examples" />
+  <file file_name="../../../Source/external/micro-ecc/examples/ecc_test" />
+  <file file_name="../../../Source/external/micro-ecc/examples/ecc_test/ecc_test.ino" />
+  <file file_name="../../../Source/external/micro-ecc/scripts" />
+  <file file_name="../../../Source/external/micro-ecc/scripts/square_avr.py" />
+  <file file_name="../../../Source/external/micro-ecc/scripts/mult_arm.py" />
+  <file file_name="../../../Source/external/micro-ecc/scripts/mult_avr_extra.py" />
+  <file file_name="../../../Source/external/micro-ecc/scripts/square_arm.py" />
+  <file file_name="../../../Source/external/micro-ecc/scripts/mult_avr.py" />
+  <file file_name="../../../Source/external/micro-ecc/emk_project.py" />
+  <file file_name="../../../Source/external/micro-ecc/emk_rules.py" />
+  <file file_name="../../../Source/external/micro-ecc/asm_arm_mult_square.inc" />
+  <file file_name="../../../Source/external/micro-ecc/LICENSE.txt" />
+  <file file_name="../../../Source/external/micro-ecc/library.properties" />
+  <file file_name="../../../Source/external/micro-ecc/asm_avr.inc" />
+  <file file_name="../../../Source/external/micro-ecc/micro_ecc_lib_nrf52.lib" />
+</folder>
+
+<folder Name="service">
+  <file file_name="../../../Source/service/power" />
+  <file file_name="../../../Source/service/power/power.c" />
+  <file file_name="../../../Source/service/dfu" />
+  <file file_name="../../../Source/service/sensor" />
+  <file file_name="../../../Source/service/sensor/gps.c" />
+  <file file_name="../../../Source/service/sensor/sensor.c" />
+
+</folder>
   </project>
   <configuration Name="Release"
     c_preprocessor_definitions="NDEBUG"

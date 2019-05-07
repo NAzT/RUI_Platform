@@ -14,6 +14,7 @@
   <ProjectSessionItem path="ble_app_blinky_c_pca10040_s132"/>
   <ProjectSessionItem path="ble_app_blinky_c_pca10040_s132;ble_app_blinky_c_pca10040_s132"/>
   <ProjectSessionItem path="ble_app_blinky_c_pca10040_s132;ble_app_blinky_c_pca10040_s132;Application"/>
+  <ProjectSessionItem path="ble_app_blinky_c_pca10040_s132;ble_app_blinky_c_pca10040_s132;nRF_Segger_RTT"/>
  </Project>
  <Register1/>
  <Register2/>
@@ -38,8 +39,9 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="181" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="0" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="54" y="6" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="0" top="0" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="12014" useTextEdit="1" useBinaryEdit="0" left="0" path="../config/sdk_config.h" selected="0" top="11975" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="93" useTextEdit="1" useBinaryEdit="0" left="0" path="ble_app_blinky_c_pca10040_s132.emProject" selected="1" top="73" codecName="Default"/>
  </Files>
  <ARMCrossStudioWindow activeProject="ble_app_blinky_c_pca10040_s132" fileDialogDefaultFilter="*.c" autoConnectTarget="J-Link" buildConfiguration="Release" sessionSettings="" debugSearchFileMap="" fileDialogInitialDirectory="" debugSearchPath="" autoConnectCapabilities="3199"/>
 </session>
