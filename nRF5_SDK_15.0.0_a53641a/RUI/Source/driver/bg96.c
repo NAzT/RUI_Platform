@@ -158,6 +158,7 @@ int Gsm_WaitRspOK(char *rsp_value, uint16_t timeout_ms, uint8_t is_rf)
             }
 
             GSM_RSP[i++] = (char)c;
+            SEGGER_RTT_printf(0,"%c", c);
 
             if(i >= 0 && rsp_value != NULL)
             {
@@ -169,8 +170,11 @@ int Gsm_WaitRspOK(char *rsp_value, uint16_t timeout_ms, uint8_t is_rf)
                 {
                     if(i > wait_len && rsp_value != NULL)
                     {
-                        SEGGER_RTT_printf(0,"--%s  len=%d\r\n", rsp_value, i);
+                        // SEGGER_RTT_printf(0,"--%s  len=%d\r\n", rsp_value, i);
                         memcpy(rsp_value, GSM_RSP, i);
+                        // NRF_LOG_INFO("")
+                        SEGGER_RTT_printf(0,"--len=%d, %s<\r\n", i, rsp_value);
+                        // NRF_LOG_INFO("%s", rsp_value);
                     }
                     ret = 0;
                     break;
@@ -779,34 +783,47 @@ int Gsm_Init()
     Gsm_Gpio_Init();
     Gsm_PowerUp();
     // NRF_LOG_INFO( "check auto baud\r\n");
-    rak_uart_init(GSM_USE_UART, GSM_RXD_PIN, GSM_TXD_PIN, UARTE_BAUDRATE_BAUDRATE_Baud57600);
-    // delay_ms(1000);
-    // // /*module init ,check is auto baud,if auto,config to 115200 baud.*/
-    // Gsm_CheckAutoBaud(); 
-    NRF_LOG_INFO( "set echo\r\n");
-    // /*isable cmd echo*/
-    Gsm_SetEchoCmd(0);
+    // rak_uart_init(GSM_USE_UART, GSM_RXD_PIN, GSM_TXD_PIN, UARTE_BAUDRATE_BAUDRATE_Baud57600);
+    // // delay_ms(1000);
+    // // // /*module init ,check is auto baud,if auto,config to 115200 baud.*/
+    // // Gsm_CheckAutoBaud(); 
+    // NRF_LOG_INFO( "set echo\r\n");
+    // // /*isable cmd echo*/
+    // Gsm_SetEchoCmd(0);
 
-    NRF_LOG_INFO( "check sim card\r\n");
-    /*check SIM Card status,if not ready,retry 60s,return*/
-    // time_count = 0;
-    gps_config();
-    delay_ms(1000);
+    // NRF_LOG_INFO( "check sim card\r\n");
+    // /*check SIM Card status,if not ready,retry 60s,return*/
+    // // time_count = 0;
+    // gps_config();
+    // delay_ms(1000);
     int rx = 8;
     int tx = 6;
-    // rak_uart_init(GSM_USE_UART,rx,tx,UART_BAUDRATE_BAUDRATE_Baud9600);
+    rak_uart_init(GSM_USE_UART,rx,tx,UART_BAUDRATE_BAUDRATE_Baud57600);
     delay_ms(800);
     // Gsm_Gpio_Init();
     // Gsm_PowerUp();
 
     uint8_t  str_tmp[64];
-    while(1)
-    {
         memset(str_tmp,0,64);
         Gsm_print("AT");
-        Gsm_WaitRspOK(str_tmp, 1000, true);
-        
-        NRF_LOG_INFO("%s", str_tmp);
+        Gsm_WaitRspOK(str_tmp, 1000, true); 
+        delay_ms(1000);
+        Gsm_print("AT+CGNSPWR=1");
+        Gsm_WaitRspOK(str_tmp, 1000, true); 
+        delay_ms(1000);
+        Gsm_print("AT+CGNSPWR?");
+        Gsm_WaitRspOK(str_tmp, 1000, true); 
+
+        Gsm_print("AT+CGNSTST=1,1");
+        Gsm_WaitRspOK(str_tmp, 1000, true); 
+    while(1)
+    {
+        // char c = Gsm_RxByte();
+        Gsm_print("AT+CGNSINF");
+        Gsm_WaitRspOK(str_tmp, 500, true); 
+        // SEGGER_RTT_printf(0,"%c", c);
+        Gsm_WaitRspOK(str_tmp, 500, true); 
+        Gsm_print("AT+CGNSTST=1,1");
         delay_ms(1000);
     }
     return 0;

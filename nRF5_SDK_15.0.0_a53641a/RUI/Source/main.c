@@ -97,9 +97,7 @@
 #include "itracker.h"
 #include "hal_uart.h"
 
-#ifdef DFU_SUPPORT
-#include "ble_dfu.h"
-#endif
+#define BLE_SUPPORT 1
 
 #define APP_BLE_CONN_CFG_TAG            1                                           /**< A tag identifying the SoftDevice BLE configuration. */
 
@@ -936,7 +934,7 @@ int main(void)
     SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
     NRF_POWER->DCDCEN = 1;
     
-#ifdef BLE_SUPPORT
+// #ifdef BLE_SUPPORT
     ble_stack_init();
     timers_init();
     gap_params_init();
@@ -945,11 +943,7 @@ int main(void)
     advertising_init();
     conn_params_init();
     peer_manager_init();
-#endif
-
-#ifdef DFU_TEST
-    dfu_settings_init();
-#endif
+// #endif 
     sensors_init();
     itracker_function_init();
 #ifdef BLE_SUPPORT
@@ -969,12 +963,6 @@ int main(void)
 #ifdef BSP_MODE
     xReturned = xTaskCreate(test_task, "test", 512, NULL, 2, NULL);
 #endif
-
-#ifdef MAX7_TEST
-    xReturned = xTaskCreate(gps_task, "gps", 128, NULL, 1, &xTaskGps);
-#endif
-
-
     // Start FreeRTOS scheduler.
 
     vTaskStartScheduler();
