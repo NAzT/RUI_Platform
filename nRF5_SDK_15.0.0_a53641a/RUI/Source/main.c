@@ -155,71 +155,6 @@ xSemaphoreHandle xBinarySemaphore_iot = NULL;
 uint8_t cmd[128] = {0};
 #endif
 
-#if defined(LORA_81x_TEST) || defined(LORA_4600_TEST)
-
-uint8_t JOIN_FLAG = 0;  // 0-not connect; 1- connect
-extern int lora_send_ok;
-
-xSemaphoreHandle xBinarySemaphore = NULL;
-extern void SX1276OnDio0Irq(void); 
-extern lora_cfg_t g_lora_cfg_t;
-extern int  parse_lora_config(char* str, lora_cfg_t *cfg);
-extern void write_lora_config(void);
-void lora_task(void * pvParameter)
-{
-    while(1)
-    {
-         if( xSemaphoreTake( xBinarySemaphore, portMAX_DELAY ) == pdTRUE )
-         {
-             SX1276OnDio0Irq();
-         }
-         //after getting Semaphore, must call vTaskDelay to excute pendsv
-         vTaskDelay(2000);
-    }
-
-}
-
-#endif
-
-#ifdef MAX7_TEST
-
-extern double gps_lat;
-extern double gps_lon;   
-extern uint8_t GpsDataBuffer[512];
-TaskHandle_t xTaskGps;
-
-void gps_task(void * pvParameter)
-{
-    static uint8_t count = 10;
-    while(1)
-    { 
-    	  if(count > 1)
-          {
-	          Max7GpsReadDataStream();
-	          //NRF_LOG_INFO("GpsDataBuffer =\r\n%s\r\n",GpsDataBuffer);
-	          if (GpsParseGpsData(GpsDataBuffer, 512))
-	          {
-	                GpsGetLatestGpsPositionDouble(&gps_lat, &gps_lon);
-	          }
-	          count--;
-	          vTaskDelay(100); 
-          }
-          else
-          {
-          	count = 10;
-		vTaskSuspend(NULL);
-          }
-          
-    }
-}
-
-#endif
-
-#ifdef DFU_TEST
-//dfu task
-extern void dfu_settings_init(void);
-void dfu_task(void * pvParameter);
-#endif
 
 /**@brief Function for the Timer initialization.
  *
@@ -1020,25 +955,7 @@ int main(void)
 #ifdef BLE_SUPPORT
     // Create a FreeRTOS task for the BLE stack. The task will run advertising_start() before entering its loop.
     nrf_sdh_freertos_init(advertising_start, NULL);
-#endif
-
-#ifdef DFU_TEST
-    // dfu task is the only background task
-    xReturned = xTaskCreate(dfu_task, "dfu", 512, NULL, 1, NULL);
-#endif
-
-#if defined(LORA_81x_TEST) || defined(LORA_4600_TEST)
-
-    vSemaphoreCreateBinary(xBinarySemaphore);
-    if(xBinarySemaphore == NULL)
-    {
-        NRF_LOG_INFO("xBinarySemaphore is NULL\r\n");
-    }
-   //creat lorawan IRQ sync task for TX and RX interrupt
-    xReturned = xTaskCreate(lora_task, "lora", 256, NULL, 1, NULL);
-   //test task
-
-#endif
+#endif 
 
 #ifdef ACCESS_NET_TEST
     vSemaphoreCreateBinary(xBinarySemaphore_iot);
