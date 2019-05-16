@@ -38,7 +38,7 @@
 #endif /* USE_FULL_ASSERT */
 
 	
-	//#define BC95
+//#define BC95
 //#define M35
 
 /*
@@ -97,53 +97,6 @@
 		GPS_PWR_ON		--	P0.10
 		GPS_RESET		--	P0.31
 
-*/
-// #define             GPS_STANDBY_PIN                        7
-// #define             GPS_TXD_PIN                        8
-// #define             GPS_RXD_PIN                        9
-// #define 		  GPS_PWR_ON_PIN											10
-// #define             GPS_RESET_PIN                        31
-
-// #define             GPS_PWR_ON                     nrf_gpio_pin_write ( GPS_PWR_ON_PIN, 1 )
-// #define             GPS_PWR_OFF                      nrf_gpio_pin_write ( GPS_PWR_ON_PIN, 0 )
-
-// #define             GPS_RESET_HIGH                           nrf_gpio_pin_write ( GPS_RESET_PIN, 1 )
-// #define             GPS_RESET_LOW                            nrf_gpio_pin_write ( GPS_RESET_PIN, 0 )
-
-
-/*
-		lis3dh PIN Assignment
-		LIS3DH_SCL		--	P0.18
-		LIS3DH_SDA		--	P0.19
-		LIS3DH_INT1		--	P0.25
-		LIS3DH_RES		--	P0.26
-		LIS3DH_INT2		--	P0.27
-		
-*/
-/*
-		lis2mdl PIN Assignment
-		LIS2MDL_SCL		--	P0.11
-		LIS2MDL_SDA		--	P0.13
-		LIS2MDL_INT		--	P0.16
-		
-*/
-
-
-/*
-		bme280 PIN Assignment
-		BME_CS		--	P0.02
-		BME_SDI		--	P0.03
-		BME_SCK		--	P0.04
-		BME_SDO		--	P0.05
-		
-*/ 
-
-/*
-		OPT3001 PIN Assignment
-		OPT_SDA		--	P0.21
-		OPT_INT		--	P0.22
-		OPT_SCL		--	P0.23
-		
 */
 
 

@@ -278,43 +278,6 @@ uint32_t gps_data_get_bus(uint8_t *data, uint32_t len)
 void itracker_function_init()
 {
     memset(&itracker_function,0,sizeof(itracker_function));
-#ifdef SHT31_TEST
-    itracker_function.temperature_get = get_sht31_temp_bus;
-    itracker_function.humidity_get = get_sht31_humidity_bus;
-#endif
-#ifdef SHTC3_TEST
-    itracker_function.temperature_get = get_shtc3_temp_bus;
-    itracker_function.humidity_get = get_shtc3_humidity_bus;
-#endif
-
-#ifdef LPS22HB_TEST
-    itracker_function.pressure_get = get_lps22hb_pressure_bus;
-#endif
-#ifdef BEM280_TEST
-    itracker_function.temperature_get = get_bme280_temp_bus;
-    itracker_function.humidity_get = get_bme280_humidity_bus;
-    itracker_function.pressure_get = get_bme280_pressure_bus;
-#endif
-#ifdef LIS3DH_TEST
-    itracker_function.acceleration_get = get_lis3dh_data_bus;
-#endif
-#ifdef LIS2MDL_TEST
-    itracker_function.magnetic_get = get_lis2mdl_data_bus;
-#endif
-#ifdef OPT3001_TEST
-    itracker_function.light_strength_get = get_opt3001_data_bus;
-#endif
-
-#if defined(L70R_TEST) ||  defined(BG96_TEST) ||  defined(MAX7_TEST)
-    itracker_function.gps_get = gps_data_get_bus;
-#endif
-
-#if defined(BC95G_TEST) || defined(M35_TEST) || defined(BG96_TEST)
     itracker_function.communicate_send = Gsm_print;
-    itracker_function.communicate_response = Gsm_wait_response;
-#endif
-
-#if defined(LORA_81x_TEST) || defined(LORA_4600_TEST)
-    itracker_function.communicate_send = lora_send;
-#endif
+    itracker_function.communicate_response = Gsm_wait_response; 
 }
