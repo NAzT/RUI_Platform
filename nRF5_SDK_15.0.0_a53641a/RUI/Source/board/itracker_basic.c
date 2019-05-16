@@ -79,13 +79,12 @@ uint32_t gps_data_get_bus(uint8_t *data, uint32_t len)
     {
         return 1;
     }
-    NRF_LOG_INFO("GET DATA len=%lu\r\n", len);
-    NRF_LOG_INFO("GET DATA %s\r\n", data);
+    NRF_LOG_INFO("GET DATA len=%lu", len);
+    NRF_LOG_INFO("GET DATA %s", data);
     for(int i =0 ; i < len; i++) {
         NRF_LOG_INFO("%c", data[i]); 
-    }
-
-    // gps_data_get(data,len);
+    } 
+    gps_data_get(data,len);
 
     return ret;
 }
@@ -100,6 +99,6 @@ void itracker_function_init()
     itracker_function.gps_get = gps_data_get_bus;
     NRF_LOG_INFO("/itracker_function_init");
 
-    // itracker_function.communicate_send = Gsm_print;
-    // itracker_function.communicate_response = Gsm_wait_response;
+    itracker_function.communicate_send = Gsm_print;
+    itracker_function.communicate_response = Gsm_wait_response;
 }

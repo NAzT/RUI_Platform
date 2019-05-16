@@ -9,6 +9,7 @@
 #include "sensor.h"
 #include "itracker.h"
 #include "nrf_log.h"
+#include "bg96.h"
 
 
 #if defined(BC95G_TEST) || defined(M35_TEST) || defined(BG96_TEST)
@@ -36,21 +37,29 @@ void test_task(void * pvParameter)
     float light = 0;
     double lat = 0;
     double lon = 0;
+    NRF_LOG_INFO("===> Starting Application <===");
+    NRF_LOG_INFO("===> Starting Application <===");
+    NRF_LOG_INFO("===> Starting Application <===");
+    NRF_LOG_INFO("===> Starting Application <===");
+    NRF_LOG_INFO("===> Starting Application <===");
+    NRF_LOG_INFO("===> Starting Application <===");
+    NRF_LOG_INFO("===> Starting Application <===");
+    NRF_LOG_INFO("===> Starting Application <===");
+    NRF_LOG_INFO("===> Starting Application <===");
+    NRF_LOG_INFO("===> Starting Application <===");
+    NRF_LOG_INFO("===> Starting Application <===");
     while(1)
     {
-        NRF_LOG_INFO("++++++++++++++++test begin++++++++++++++++\r\n");
+        NRF_LOG_INFO("++++++++++++++++test begin++++++++++++++++\n");
         power_save_close();
 
         // itracker_function.acceleration_get(&x,&y,&z);
         // NRF_LOG_INFO("acceleration x,y,z = %d mg,%d mg,%d mg",x,y,z); 
-
         NRF_LOG_INFO("Z");
         memset(gps_rsp,0,128);
         itracker_function.gps_get(gps_rsp,128);
         vTaskDelay(2000);
-        NRF_LOG_INFO("Y");
-        // NRF_LOG_INFO("iiigps info :%lf,%lf;",gps_lat,gps_lon); 
-
+        NRF_LOG_INFO("iiigps info :%lf,%lf;",gps_lat,gps_lon); 
 #if defined(SLEEP_MODE) && !defined(LORA_TEST)
         power_save_open();
 #endif

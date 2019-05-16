@@ -12,10 +12,7 @@
 #define UART_TX_BUF_SIZE 256                         /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE 2048                        /**< UART RX buffer size. */
 
-
-uart_run_t uart_use = UART_IDLE;
-
-
+uart_run_t uart_use = UART_IDLE; 
 void uart_event_handle(app_uart_evt_t * p_event)
 {
     static uint8_t index = 0;
@@ -29,8 +26,8 @@ void uart_event_handle(app_uart_evt_t * p_event)
             uint8_t rx_data;
             if( app_uart_get( &rx_data ) == 0 )
             {
-                //Gps_data_update(rx_data);
-                SEGGER_RTT_printf(0, "%c", rx_data);
+                Gps_data_update(rx_data);
+                //SEGGER_RTT_printf(0, "%c", rx_data);
                 // NRF_LOG_INFO("%c", rx_data);
             }
 
