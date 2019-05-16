@@ -10,6 +10,7 @@
 #include "nrf_soc.h"
 #include "itracker.h"
 #include "gps.h"
+#include "bg96.h"
 #include "hal_uart.h"
 
 double gps_lat = 0;
@@ -61,15 +62,15 @@ uint32_t get_lis3dh_data_bus(int *x, int *y, int *z)
 //     return ret;
 // }
 // #if defined(BC95G_TEST) || defined(M35_TEST)
-// void Gsm_wait_response(uint8_t *rsp, uint32_t len, uint32_t timeout,GSM_RECEIVE_TYPE type)
-// {
-//     if(rsp == NULL || len < 0)
-//     {
-//         return;
-//     }
-//     g_type = type;
-//     Gsm_WaitRspOK(rsp, timeout, true);
-// }
+void Gsm_wait_response(uint8_t *rsp, uint32_t len, uint32_t timeout,GSM_RECEIVE_TYPE type)
+{
+    if(rsp == NULL || len < 0)
+    {
+        return;
+    }
+    g_type = type;
+    Gsm_WaitRspOK(rsp, timeout, true);
+}
 // #endif
 uint32_t gps_data_get_bus(uint8_t *data, uint32_t len)
 {
