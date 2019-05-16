@@ -1,3 +1,42 @@
+/**
+ * Copyright (c) 2014 - 2017, Nordic Semiconductor ASA
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this
+ *    list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form, except as embedded into a Nordic
+ *    Semiconductor ASA integrated circuit in a product or a software update for
+ *    such product, must reproduce the above copyright notice, this list of
+ *    conditions and the following disclaimer in the documentation and/or other
+ *    materials provided with the distribution.
+ *
+ * 3. Neither the name of Nordic Semiconductor ASA nor the names of its
+ *    contributors may be used to endorse or promote products derived from this
+ *    software without specific prior written permission.
+ *
+ * 4. This software, with or without modification, must only be used with a
+ *    Nordic Semiconductor ASA integrated circuit.
+ *
+ * 5. Any software provided in binary form under this license must not be reverse
+ *    engineered, decompiled, modified and/or disassembled.
+ *
+ * THIS SOFTWARE IS PROVIDED BY NORDIC SEMICONDUCTOR ASA "AS IS" AND ANY EXPRESS
+ * OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+ * OF MERCHANTABILITY, NONINFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL NORDIC SEMICONDUCTOR ASA OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
+ * GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT
+ * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ */
 /** @file
  *
  * @defgroup ble_sdk_uart_over_ble_main main.c
@@ -58,11 +97,15 @@
 #include "itracker.h"
 #include "hal_uart.h"
 
+#ifdef DFU_SUPPORT
+#include "ble_dfu.h"
+#endif
+
 #define APP_BLE_CONN_CFG_TAG            1                                           /**< A tag identifying the SoftDevice BLE configuration. */
 
 #define APP_FEATURE_NOT_SUPPORTED       BLE_GATT_STATUS_ATTERR_APP_BEGIN + 2        /**< Reply when unsupported features are requested. */
 
-#define DEVICE_NAME                     "XXX"                               /**< Name of device. Will be included in the advertising data. */
+#define DEVICE_NAME                     "RUI"                               /**< Name of device. Will be included in the advertising data. */
 #define NUS_SERVICE_UUID_TYPE           BLE_UUID_TYPE_VENDOR_BEGIN                  /**< UUID type for the Nordic UART Service (vendor specific). */
 
 #define APP_BLE_OBSERVER_PRIO           1                                           /**< Application's BLE observer priority. You shouldn't need to modify this value. */
@@ -112,6 +155,66 @@ xSemaphoreHandle xBinarySemaphore_iot = NULL;
 uint8_t cmd[128] = {0};
 #endif
 
+#if defined(LORA_81x_TEST) || defined(LORA_4600_TEST)
+
+uint8_t JOIN_FLAG = 0;  // 0-not connect; 1- connect
+extern int lora_send_ok;
+
+xSemaphoreHandle xBinarySemaphore = NULL;
+extern void SX1276OnDio0Irq(void); 
+extern lora_cfg_t g_lora_cfg_t;
+extern int  parse_lora_config(char* str, lora_cfg_t *cfg);
+extern void write_lora_config(void);
+void lora_task(void * pvParameter)
+{
+    while(1)
+    {
+         if( xSemaphoreTake( xBinarySemaphore, portMAX_DELAY ) == pdTRUE )
+         {
+             SX1276OnDio0Irq();
+         }
+         //after getting Semaphore, must call vTaskDelay to excute pendsv
+         vTaskDelay(2000);
+    }
+
+}
+
+#endif
+
+#ifdef MAX7_TEST
+
+extern double gps_lat;
+extern double gps_lon;   
+extern uint8_t GpsDataBuffer[512];
+TaskHandle_t xTaskGps;
+
+void gps_task(void * pvParameter)
+{
+    static uint8_t count = 10;
+    while(1)
+    { 
+    	  if(count > 1)
+          {
+	          Max7GpsReadDataStream();
+	          //NRF_LOG_INFO("GpsDataBuffer =\r\n%s\r\n",GpsDataBuffer);
+	          if (GpsParseGpsData(GpsDataBuffer, 512))
+	          {
+	                GpsGetLatestGpsPositionDouble(&gps_lat, &gps_lon);
+	          }
+	          count--;
+	          vTaskDelay(100); 
+          }
+          else
+          {
+          	count = 10;
+		vTaskSuspend(NULL);
+          }
+          
+    }
+}
+
+#endif
+
 #ifdef DFU_TEST
 //dfu task
 extern void dfu_settings_init(void);
@@ -141,9 +244,12 @@ static void advertising_start()
  */
 void power_manage(void)
 {
-    power_release_gpio();
+#ifdef BLE_SUPPORT
+	sd_app_evt_wait();
+#else
     __WFI();
-    __WFE();
+    __WFE();	
+#endif
 }
 /**@brief A function which is hooked to idle task.
  * @note Idle hook must be enabled in FreeRTOS configuration (configUSE_IDLE_HOOK).
@@ -153,15 +259,15 @@ void vApplicationIdleHook( void )
     while(1)
     {
 #ifdef SLEEP_MODE
-#ifdef LORA_TEST
+#if defined(LORA_81x_TEST) || defined(LORA_4600_TEST)
     if(lora_send_ok == 1)
         {
-            __WFI();
-            __WFE();
+        	power_manage();
+
         }
 #else
-    __WFI();
-    __WFE();
+    	power_manage();
+
 #endif
 
 #endif
@@ -246,10 +352,15 @@ static void nus_data_handler(ble_nus_evt_t * p_evt)
 
         NRF_LOG_DEBUG("Received data from BLE NUS.");
         NRF_LOG_HEXDUMP_DEBUG(p_evt->params.rx_data.p_data, p_evt->params.rx_data.length);
+#if defined(LORA_81x_TEST) || defined(LORA_4600_TEST)
+        if(strncmp((char*)p_evt->params.rx_data.p_data, "lora_cfg:", strlen("lora_cfg:")) == 0)
+        {
+            parse_lora_config((char*)p_evt->params.rx_data.p_data+strlen("lora_cfg:"), &g_lora_cfg_t);
+            write_lora_config();
+        }
+#endif
 
 #ifdef ACCESS_NET_TEST
-NRF_LOG_INFO("NATTTTTTTTTT");
-
         memset(cmd,0,128);
         memcpy(cmd,&(p_evt->params.rx_data.p_data[0]),p_evt->params.rx_data.length);
         NRF_LOG_DEBUG("cmd = %s\r\n",cmd);
@@ -267,7 +378,84 @@ NRF_LOG_INFO("NATTTTTTTTTT");
 }
 /**@snippet [Handling the data received over BLE] */
 
+#ifdef DFU_SUPPORT
 
+static void advertising_config_get(ble_adv_modes_config_t * p_config)
+{
+    memset(p_config, 0, sizeof(ble_adv_modes_config_t));
+
+    p_config->ble_adv_fast_enabled  = true;
+    p_config->ble_adv_fast_interval = APP_ADV_INTERVAL;
+    p_config->ble_adv_fast_timeout  = APP_ADV_TIMEOUT_IN_SECONDS;
+}
+
+static void disconnect(uint16_t conn_handle, void * p_context)
+{
+    UNUSED_PARAMETER(p_context);
+
+    ret_code_t err_code = sd_ble_gap_disconnect(conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
+    if (err_code != NRF_SUCCESS)
+    {
+        NRF_LOG_WARNING("Failed to disconnect connection. Connection handle: %d Error: %d", conn_handle, err_code);
+    }
+    else
+    {
+        NRF_LOG_DEBUG("Disconnected connection handle %d", conn_handle);
+    }
+}
+
+/**@brief Function for handling dfu events from the Buttonless Secure DFU service
+ *
+ * @param[in]   event   Event from the Buttonless Secure DFU service.
+ */
+static void ble_dfu_evt_handler(ble_dfu_buttonless_evt_type_t event)
+{
+    switch (event)
+    {
+        case BLE_DFU_EVT_BOOTLOADER_ENTER_PREPARE:
+        {
+            NRF_LOG_INFO("Device is preparing to enter bootloader mode.");
+
+            // Prevent device from advertising on disconnect.
+            ble_adv_modes_config_t config;
+            advertising_config_get(&config);
+            config.ble_adv_on_disconnect_disabled = true;
+            ble_advertising_modes_config_set(&m_advertising, &config);
+
+            // Disconnect all other bonded devices that currently are connected.
+            // This is required to receive a service changed indication
+            // on bootup after a successful (or aborted) Device Firmware Update.
+            uint32_t conn_count = ble_conn_state_for_each_connected(disconnect, NULL);
+            NRF_LOG_INFO("Disconnected %d links.", conn_count);
+            break;
+        }
+
+        case BLE_DFU_EVT_BOOTLOADER_ENTER:
+            // YOUR_JOB: Write app-specific unwritten data to FLASH, control finalization of this
+            //           by delaying reset by reporting false in app_shutdown_handler
+            NRF_LOG_INFO("Device will enter bootloader mode.");
+            break;
+
+        case BLE_DFU_EVT_BOOTLOADER_ENTER_FAILED:
+            NRF_LOG_ERROR("Request to enter bootloader mode failed asynchroneously.");
+            // YOUR_JOB: Take corrective measures to resolve the issue
+            //           like calling APP_ERROR_CHECK to reset the device.
+            break;
+
+        case BLE_DFU_EVT_RESPONSE_SEND_ERROR:
+            NRF_LOG_ERROR("Request to send a response to client failed.");
+            // YOUR_JOB: Take corrective measures to resolve the issue
+            //           like calling APP_ERROR_CHECK to reset the device.
+            APP_ERROR_CHECK(false);
+            break;
+
+        default:
+            NRF_LOG_ERROR("Unknown event from ble_dfu_buttonless.");
+            break;
+    }
+}
+
+#endif
 /**@brief Function for initializing services that will be used by the application.
  */
 static void services_init(void)
@@ -281,6 +469,21 @@ static void services_init(void)
 
     err_code = ble_nus_init(&m_nus, &nus_init);
     APP_ERROR_CHECK(err_code);
+
+#ifdef DFU_SUPPORT
+
+    ble_dfu_buttonless_init_t dfus_init = {0};
+
+    // Initialize the async SVCI interface to bootloader.
+    err_code = ble_dfu_buttonless_async_svci_init();
+    APP_ERROR_CHECK(err_code); 
+
+    dfus_init.evt_handler = ble_dfu_evt_handler; 
+
+    err_code = ble_dfu_buttonless_init(&dfus_init);
+    APP_ERROR_CHECK(err_code);
+
+#endif
 }
 
 
@@ -628,9 +831,14 @@ static void advertising_init(void)
 
 /**@brief Function for initializing the nrf log module.
  */
+uint32_t get_rtc_counter(void)
+{
+    return NRF_RTC1->COUNTER;
+} 
+
 void log_init(void)
 {
-    ret_code_t err_code = NRF_LOG_INIT(NULL);
+    ret_code_t err_code = NRF_LOG_INIT(get_rtc_counter);
     APP_ERROR_CHECK(err_code);
 
     NRF_LOG_DEFAULT_BACKENDS_INIT();
@@ -790,11 +998,10 @@ int main(void)
     nrf_drv_clock_init();
 
     // Activate deep sleep mode.
-    // Nat
-
-    // SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
-    // NRF_POWER->DCDCEN = 1;
-
+    SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+    NRF_POWER->DCDCEN = 1;
+    
+#ifdef BLE_SUPPORT
     ble_stack_init();
     timers_init();
     gap_params_init();
@@ -803,26 +1010,51 @@ int main(void)
     advertising_init();
     conn_params_init();
     peer_manager_init();
+#endif
+
+#ifdef DFU_TEST
+    dfu_settings_init();
+#endif
     sensors_init();
     itracker_function_init();
+#ifdef BLE_SUPPORT
     // Create a FreeRTOS task for the BLE stack. The task will run advertising_start() before entering its loop.
     nrf_sdh_freertos_init(advertising_start, NULL);
+#endif
 
+#ifdef DFU_TEST
+    // dfu task is the only background task
+    xReturned = xTaskCreate(dfu_task, "dfu", 512, NULL, 1, NULL);
+#endif
+
+#if defined(LORA_81x_TEST) || defined(LORA_4600_TEST)
+
+    vSemaphoreCreateBinary(xBinarySemaphore);
+    if(xBinarySemaphore == NULL)
+    {
+        NRF_LOG_INFO("xBinarySemaphore is NULL\r\n");
+    }
+   //creat lorawan IRQ sync task for TX and RX interrupt
+    xReturned = xTaskCreate(lora_task, "lora", 256, NULL, 1, NULL);
+   //test task
+
+#endif
 
 #ifdef ACCESS_NET_TEST
-    NRF_LOG_INFO("nat ACCESS_NET_TEST")
     vSemaphoreCreateBinary(xBinarySemaphore_iot);
     if(xBinarySemaphore_iot == NULL)
     {
         NRF_LOG_INFO("xBinarySemaphore_iot is NULL\r\n");
     }
-    else {
-        NRF_LOG_INFO("xBinarySemaphore_iot created.\r\n"); 
-    }
 	xReturned = xTaskCreate(nb_iot_task, "nb_iot", 512*2, NULL, 2, NULL);
+#endif
 
-#else
+#ifdef BSP_MODE
     xReturned = xTaskCreate(test_task, "test", 512, NULL, 2, NULL);
+#endif
+
+#ifdef MAX7_TEST
+    xReturned = xTaskCreate(gps_task, "gps", 128, NULL, 1, &xTaskGps);
 #endif
 
 

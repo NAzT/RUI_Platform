@@ -10,11 +10,11 @@
 #include "board_basic.h"
 
 #define  GSM_GENER_CMD_LEN                    (128)
-#define  GSM_GENER_CMD_TIMEOUT                (500)  //ms
+#define  GSM_GENER_CMD_TIMEOUT                (200)  //ms
 #define  GSM_OPENSOCKET_CMD_TIMEOUT           (15000)  //ms
 #define  GSM_GETDNSIP_CMD_TIMEOUT                (30*1000)  //ms
 
-#define  GSM_FIX_BAUD           							(115200)  //baud
+#define  GSM_FIX_BAUD           							(57600)  //baud
 #define  GSM_CHECKSIM_RETRY_NUM    						(5)//  60S
 #define  GSM_CHECKSIM_RETRY_TIME    					(1000)//  1000ms
 

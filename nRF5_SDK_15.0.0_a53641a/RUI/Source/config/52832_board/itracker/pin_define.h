@@ -6,8 +6,8 @@
  * Pin definitions
  */
 #define RADIO_DIO_0		P7
-#define RADIO_DIO_1		P8
-#define RADIO_DIO_2		P9
+// #define RADIO_DIO_1		P8
+// #define RADIO_DIO_2		P9
 #define RADIO_DIO_3		P10
 
 #define RADIO_NSS		P14
@@ -62,22 +62,13 @@
 	
 
 
-#define             GSM_PWR_ON_PIN                        6
-#define             GSM_RESET_PIN                        14
-#define             GSM_PWRKEY_PIN                        15
+#define             GSM_PWR_ON_PIN                       (16)
+#define             GSM_RESET_PIN                        (18)
+#define             GSM_PWRKEY_PIN                       (19)
 
-#if defined(BG96_TEST)
-#define             GSM_TXD_PIN                        9
-#define             GSM_RXD_PIN                        7
-#endif
-#if defined(M35_TEST)
-#define             GSM_TXD_PIN                        12
-#define             GSM_RXD_PIN                        20
-#endif
-#if defined(BC95G_TEST)
-#define             GSM_TXD_PIN                        20
-#define             GSM_RXD_PIN                        12
-#endif
+#define             GSM_TXD_PIN                        (6)
+#define             GSM_RXD_PIN                        (8)
+
 
 
 #define             GSM_PWR_ON                     nrf_gpio_pin_write ( GSM_PWR_ON_PIN, 1 )
@@ -107,17 +98,17 @@
 		GPS_RESET		--	P0.31
 
 */
-#define             GPS_STANDBY_PIN                        7
-#define             GPS_TXD_PIN                        9
-#define             GPS_RXD_PIN                        8
-#define 		  GPS_PWR_ON_PIN											10
-#define             GPS_RESET_PIN                        31
+// #define             GPS_STANDBY_PIN                        7
+// #define             GPS_TXD_PIN                        8
+// #define             GPS_RXD_PIN                        9
+// #define 		  GPS_PWR_ON_PIN											10
+// #define             GPS_RESET_PIN                        31
 
-#define             GPS_PWR_ON                     nrf_gpio_pin_write ( GPS_PWR_ON_PIN, 1 )
-#define             GPS_PWR_OFF                      nrf_gpio_pin_write ( GPS_PWR_ON_PIN, 0 )
+// #define             GPS_PWR_ON                     nrf_gpio_pin_write ( GPS_PWR_ON_PIN, 1 )
+// #define             GPS_PWR_OFF                      nrf_gpio_pin_write ( GPS_PWR_ON_PIN, 0 )
 
-#define             GPS_RESET_HIGH                           nrf_gpio_pin_write ( GPS_RESET_PIN, 1 )
-#define             GPS_RESET_LOW                            nrf_gpio_pin_write ( GPS_RESET_PIN, 0 )
+// #define             GPS_RESET_HIGH                           nrf_gpio_pin_write ( GPS_RESET_PIN, 1 )
+// #define             GPS_RESET_LOW                            nrf_gpio_pin_write ( GPS_RESET_PIN, 0 )
 
 
 /*
@@ -129,12 +120,6 @@
 		LIS3DH_INT2		--	P0.27
 		
 */
-#define             LIS3DH_TWI_SCL_PIN                        18
-#define             LIS3DH_TWI_SDA_PIN                        19
-#define             LIS3DH_INT1_PIN                        25
-#define 						LIS3DH_RES_PIN											26
-#define             LIS3DH_INT2_PIN                        27
-#define             LIS3DH_INT1_THRESHOLD          5
 /*
 		lis2mdl PIN Assignment
 		LIS2MDL_SCL		--	P0.11
@@ -142,9 +127,24 @@
 		LIS2MDL_INT		--	P0.16
 		
 */
-#define             LIS2MDL_TWI_SCL_PIN                        11
-#define             LIS2MDL_TWI_SDA_PIN                        13
-#define             LIS2MDL_INT_PIN                        16
+
+
+/*
+		bme280 PIN Assignment
+		BME_CS		--	P0.02
+		BME_SDI		--	P0.03
+		BME_SCK		--	P0.04
+		BME_SDO		--	P0.05
+		
+*/ 
+
+/*
+		OPT3001 PIN Assignment
+		OPT_SDA		--	P0.21
+		OPT_INT		--	P0.22
+		OPT_SCL		--	P0.23
+		
+*/
 
 
 #endif  // __PIN_DEFINE_ITRACKER_H__

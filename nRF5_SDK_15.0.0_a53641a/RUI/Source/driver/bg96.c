@@ -79,6 +79,16 @@ void Gsm_PowerUp(void)
 {
     NRF_LOG_INFO("GMS_PowerUp\r\n");
     POWER_ON;
+    // nrf_gpio_pin_write ( GSM_PWR_ON_PIN, 0 );
+    // delay_ms(200);
+    // nrf_gpio_pin_write ( GSM_PWR_ON_PIN, 1 );
+
+    // //#define             GSM_RESET_HIGH
+    // nrf_gpio_pin_write ( GSM_RESET_PIN, 0);
+    // delay_ms(60);
+
+    // //#define             GSM_PWRKEY_LOW
+    // nrf_gpio_pin_write ( GSM_PWRKEY_PIN, 1 );
 }
 
 
@@ -128,7 +138,7 @@ int Gsm_WaitRspOK(char *rsp_value, uint16_t timeout_ms, uint8_t is_rf)
             }
 
             rsp_value[i++] = (char)c;
-            //NRF_LOG_INFO("%02X", rsp_value[i - 1]);
+            NRF_LOG_INFO("%02X", rsp_value[i - 1]);
             time_count--;
         }
         while(time_count > 0);
@@ -159,7 +169,7 @@ int Gsm_WaitRspOK(char *rsp_value, uint16_t timeout_ms, uint8_t is_rf)
                 {
                     if(i > wait_len && rsp_value != NULL)
                     {
-                        //SEGGER_RTT_printf(0,"--%s  len=%d\r\n", rsp_value, i);
+                        SEGGER_RTT_printf(0,"--%s  len=%d\r\n", rsp_value, i);
                         memcpy(rsp_value, GSM_RSP, i);
                     }
                     ret = 0;
@@ -220,12 +230,12 @@ int Gsm_AutoBaud(void)
     {
         uint8_t cmd_len;
         memset(cmd, 0, GSM_GENER_CMD_LEN);
-        cmd_len = sprintf(cmd, "%s\r\n", GSM_AUTO_CMD_STR);
+        cmd_len = sprintf(cmd, "%s\r", GSM_AUTO_CMD_STR);
         do
         {
-            NRF_LOG_INFO("\r\n auto baud retry\r\n");
-            GSM_UART_TxBuf((uint8_t *)cmd, cmd_len);
-
+            NRF_LOG_INFO("\r\n auto baud-- retry\r\n");
+            NRF_LOG_INFO("%s", (char*) cmd);
+            GSM_UART_TxBuf((uint8_t *)cmd, cmd_len); 
             ret = Gsm_WaitRspOK(NULL, GSM_GENER_CMD_TIMEOUT, NULL);
             delay_ms(500);
             retry_num--;
@@ -323,8 +333,10 @@ void Gsm_print(uint8_t *at_cmd)
     uint8_t CMD[512] = {0};
     if(at_cmd == NULL)
         return;
-    memset(CMD, 0, 512);
+    memset(CMD, 0, 512); 
     cmd_len = sprintf(CMD, "%s\r\n", at_cmd);
+
+    NRF_LOG_INFO(">> Gsm_print %s", CMD);
     GSM_UART_TxBuf(CMD, cmd_len);
 }
 
@@ -494,7 +506,7 @@ void gps_config()
     delay_ms(1000);
     memset(CMD, 0, GSM_GENER_CMD_LEN);
     memset(RSP, 0, GSM_GENER_CMD_LEN);
-    cmd_len = sprintf(CMD, "%s\r\n", "AT+QGPS=1");
+    cmd_len = sprintf(CMD, "%s\r\n", "AT+QGPS=1,1,1,1,1");
     GSM_UART_TxBuf((uint8_t *)CMD, cmd_len);
     ret = Gsm_WaitRspOK(RSP, GSM_GENER_CMD_TIMEOUT * 4, true);
     NRF_LOG_INFO("AT+QGPS ret= %d\r\n", ret);
@@ -522,8 +534,8 @@ void gps_data_checksum(char *str)
         check[j++] = str[i];
     }
     sprintf(result_2,"%X",result);
-    NRF_LOG_INFO( "result_2 = %s\r\n",result_2);
-    NRF_LOG_INFO( "check = %s\r\n",check);
+    //NRF_LOG_INFO( "result_2 = %s\r\n",result_2);
+    //NRF_LOG_INFO( "check = %s\r\n",check);
 
     if(strncmp(check,result_2,2) != 0)
     {
@@ -743,6 +755,7 @@ void Gsm_CheckAutoBaud(void)
         Gsm_AutoBaud();
 
         NRF_LOG_INFO("\r\n  Fix baud\r\n");
+        NRF_LOG_INFO("%d", GSM_FIX_BAUD);
         Gsm_FixBaudCmd(GSM_FIX_BAUD);
     }
 }
@@ -754,6 +767,9 @@ void Gsm_Gpio_Init(void)
     nrf_gpio_cfg_output(GSM_PWR_ON_PIN);
     nrf_gpio_cfg_output(GSM_RESET_PIN);
     nrf_gpio_cfg_output(GSM_PWRKEY_PIN);
+    // while(1) {
+    //     NRF_LOG_INFO("LEOOOP");
+    // }
 }
 
 int Gsm_Init()
@@ -762,21 +778,37 @@ int Gsm_Init()
     int time_count;
     Gsm_Gpio_Init();
     Gsm_PowerUp();
-    NRF_LOG_INFO( "check auto baud\r\n");
-    rak_uart_init(GSM_USE_UART, GSM_RXD_PIN, GSM_TXD_PIN, UARTE_BAUDRATE_BAUDRATE_Baud115200);
-    delay_ms(1000);
-    /*module init ,check is auto baud,if auto,config to 115200 baud.*/
-    Gsm_CheckAutoBaud();
-
+    // NRF_LOG_INFO( "check auto baud\r\n");
+    rak_uart_init(GSM_USE_UART, GSM_RXD_PIN, GSM_TXD_PIN, UARTE_BAUDRATE_BAUDRATE_Baud57600);
+    // delay_ms(1000);
+    // // /*module init ,check is auto baud,if auto,config to 115200 baud.*/
+    // Gsm_CheckAutoBaud(); 
     NRF_LOG_INFO( "set echo\r\n");
-    /*isable cmd echo*/
+    // /*isable cmd echo*/
     Gsm_SetEchoCmd(0);
 
     NRF_LOG_INFO( "check sim card\r\n");
     /*check SIM Card status,if not ready,retry 60s,return*/
-    time_count = 0;
+    // time_count = 0;
     gps_config();
     delay_ms(1000);
+    int rx = 8;
+    int tx = 6;
+    // rak_uart_init(GSM_USE_UART,rx,tx,UART_BAUDRATE_BAUDRATE_Baud9600);
+    delay_ms(800);
+    // Gsm_Gpio_Init();
+    // Gsm_PowerUp();
+
+    uint8_t  str_tmp[64];
+    while(1)
+    {
+        memset(str_tmp,0,64);
+        Gsm_print("AT");
+        Gsm_WaitRspOK(str_tmp, 1000, true);
+        
+        NRF_LOG_INFO("%s", str_tmp);
+        delay_ms(1000);
+    }
     return 0;
 }
 /**

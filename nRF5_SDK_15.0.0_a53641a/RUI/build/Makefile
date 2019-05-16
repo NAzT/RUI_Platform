@@ -81,6 +81,13 @@ ifeq (1, $(word 1, $(P)))
   SRC_FILES += $(SDK_ROOT)/components/ble/peer_manager/pm_mutex.c
 endif
 
+ifeq (1, $(DFU_SUPPORT))
+  SRC_FILES += $(SDK_ROOT)/components/ble/ble_services/ble_dfu/ble_dfu.c
+  SRC_FILES += $(SDK_ROOT)/components/ble/ble_services/ble_dfu/ble_dfu_unbonded.c
+  SRC_FILES += $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_svci.c
+  SRC_FILES += $(SDK_ROOT)/components/libraries/pwr_mgmt/nrf_pwr_mgmt.c
+endif
+
 SRC_FILES += \
   $(SDK_ROOT)/RUI/Source/main.c \
   $(SDK_ROOT)/modules/nrfx/drivers/src/nrfx_uart.c \
@@ -155,7 +162,6 @@ SRC_FILES += \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_Syscalls_GCC.c \
   $(SDK_ROOT)/external/segger_rtt/SEGGER_RTT_printf.c \
-  $(SDK_ROOT)/RUI/Source/app/test_task.c \
   $(SDK_ROOT)/RUI/Source/board/board_basic.c \
   $(SDK_ROOT)/RUI/Source/board/itracker_basic.c \
   $(SDK_ROOT)/components/libraries/uart/app_uart_fifo.c \
@@ -183,6 +189,16 @@ else ifeq (2, $(word 2, $(P)))
 else ifeq (3, $(word 2, $(P)))
   SRC_FILES += $(SDK_ROOT)/RUI/Source/driver/m35.c
 else ifeq (4, $(word 2, $(P)))
+  SRC_FILES += $(SDK_ROOT)/RUI/Source/driver/sx1276_lora.c
+  SRC_FILES += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/radio/sx1276/sx1276.c
+  SRC_FILES += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/mac/region/Region.c
+  SRC_FILES += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/mac/LoRaMac.c
+  SRC_FILES += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/mac/LoRaMacCrypto.c
+  SRC_FILES += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/system/crypto/aes.c
+  SRC_FILES += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/system/crypto/cmac.c
+  SRC_FILES += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/mac/region/RegionCommon.c
+  SRC_FILES += $(SDK_ROOT)/RUI/Source/service/lora/app_lora.c
+else ifeq (5, $(word 2, $(P)))
   SRC_FILES += $(SDK_ROOT)/RUI/Source/driver/sx1276_lora.c
   SRC_FILES += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/radio/sx1276/sx1276.c
   SRC_FILES += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/mac/region/Region.c
@@ -223,6 +239,15 @@ ifeq (9, $(findstring 9, $(wordlist 3, $(NUM), $(P))))
   SRC_FILES += $(SDK_ROOT)/RUI/Source/driver/lps22hb.c
 endif
 
+ifeq (1, $(BSP_MODE))
+  SRC_FILES += $(SDK_ROOT)/RUI/Source/app/test_task.c
+endif
+
+ifeq (1, $(ACCESS_NET_TEST))
+  SRC_FILES += $(SDK_ROOT)/RUI/Source/app/hologram_task.c
+endif
+
+
 
 # Include folders common to all targets
 
@@ -246,9 +271,11 @@ endif
 ifeq (1, $(word 1, $(P)))
 	ifeq (4, $(word 2, $(P)))
     		INC_FOLDERS += $(SDK_ROOT)/RUI/Source/config/52832_board/lora815
-	else
-        	INC_FOLDERS += $(SDK_ROOT)/RUI/Source/config/52832_board/itracker
-    	endif
+	else ifeq (5, $(word 2, $(P)))
+        INC_FOLDERS += $(SDK_ROOT)/RUI/Source/config/52832_board/lora4600
+  else
+        INC_FOLDERS += $(SDK_ROOT)/RUI/Source/config/52832_board/itracker
+  endif
 endif
 
 
@@ -262,6 +289,24 @@ ifeq (4, $(word 2, $(P)))
   INC_FOLDERS += $(SDK_ROOT)/modules/nrfx/drivers/include
 endif
 
+ifeq (5, $(word 2, $(P)))
+  INC_FOLDERS += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/radio
+  INC_FOLDERS += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/mac
+  INC_FOLDERS += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/mac/region
+  INC_FOLDERS += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/radio/sx1276
+  INC_FOLDERS += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/system/crypto
+  INC_FOLDERS += $(SDK_ROOT)/RUI/Source/external/LoRaWAN/system
+  INC_FOLDERS += $(SDK_ROOT)/modules/nrfx/drivers/include
+endif
+
+ifeq (1, $(DFU_SUPPORT))
+  INC_FOLDERS += $(SDK_ROOT)/components/ble/ble_services/ble_dfu 
+  INC_FOLDERS += $(SDK_ROOT)/components/libraries/bootloader 
+  INC_FOLDERS += $(SDK_ROOT)/components/libraries/bootloader/ble_dfu 
+  INC_FOLDERS += $(SDK_ROOT)/components/libraries/bootloader/dfu 
+  INC_FOLDERS += $(SDK_ROOT)/components/libraries/pwr_mgmt 
+  INC_FOLDERS += $(SDK_ROOT)/components/libraries/svc 
+endif
 
 INC_FOLDERS += \
   $(SDK_ROOT)/components \
@@ -355,7 +400,10 @@ ifeq (3, $(word 2, $(P)))
   CFLAGS += -DM35_TEST
 endif
 ifeq (4, $(word 2, $(P)))
-  CFLAGS += -DLORA_TEST
+  CFLAGS += -DLORA_81x_TEST
+endif
+ifeq (5, $(word 2, $(P)))
+  CFLAGS += -DLORA_4600_TEST
 endif
 
 ifeq (1, $(findstring 1, $(wordlist 3, $(NUM), $(P))))
@@ -411,6 +459,20 @@ ifeq (1, $(SLEEP_MODE))
 endif
 ifeq (1, $(ACCESS_NET_TEST))
    CFLAGS += -DACCESS_NET_TEST
+endif
+ifeq (1, $(BLE_SUPPORT))
+   CFLAGS += -DBLE_SUPPORT
+endif
+ifeq (1, $(BSP_MODE))
+   CFLAGS += -DBSP_MODE
+endif
+
+
+ifeq (1, $(DFU_SUPPORT))
+  CFLAGS += -DDFU_SUPPORT
+  CFLAGS += -DBL_SETTINGS_ACCESS_ONLY
+  CFLAGS += -DNRF_DFU_SVCI_ENABLED
+  CFLAGS += -DNRF_DFU_TRANSPORT_BLE=1
 endif
 
 CFLAGS += -DSOFTDEVICE_PRESENT
@@ -513,8 +575,8 @@ help:
 *  \033[36m1. nRF52832\033[0m    * \033[35m1. bc95-g\033[0m       * \033[33m1. bme280   2. L_70_R\033[0m            *\n  \
 *  \033[36m2. nRF52840\033[0m    * \033[35m2. bg96\033[0m         * \033[33m3. lis2mdl  4. lis3dh\033[0m            *\n  \
 *                 * \033[35m3. m35\033[0m          * \033[33m5. opt3001\033[0m  \033[33m6. sht31\033[0m             *\n  \
-*                 * \033[35m4. sx1276\033[0m       * \033[33m7. ublox-max7  8. shtc3\033[0m          * \n  \
-*                 *                 * \033[33m9. lps22hb\033[0m                       * \n  \
+*                 * \033[35m4. sx1276(81x)\033[0m  * \033[33m7. ublox-max7  8. shtc3\033[0m          * \n  \
+*                 * \033[35m5. sx1276(4600)\033[0m * \033[33m9. lps22hb\033[0m                       * \n  \
 *                                                                      *\n  \
 *  \033[32m3. Compile command  \033[0m                                                *\n  \
 *                                                                      *\n  \
